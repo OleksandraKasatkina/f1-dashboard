@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Schedule</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;}
+        h1 { color: #e10600; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #15151e; color: white; }
+        
+        /* Styles for the year selection menu */
+        .filter-section { margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px; border: 1px solid #ddd; display: inline-block;}
+        select { padding: 8px; font-size: 16px; border-radius: 4px;}
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Formula 1 Schedule for {{ year }}</h1>
+    
+    <div class="filter-section">
+        <form method="GET" action="">
+            <label for="year"><strong>Select Season: </strong></label>
+            <select name="year" id="year" onchange="this.form.submit()">
+                {% for y in available_years %}
+                    <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th>Grand Prix</th>
+                    <th>Country</th>
+                    <th>Location (Circuit)</th>
+                    <th>Race Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.round }}</td>
+                    <td><strong>{{ event.event_name }}</strong></td>
+                    <td>{{ event.country }}</td>
+                    <td>{{ event.location }}</td>
+                    <td>{{ event.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+</body>
+</html>
