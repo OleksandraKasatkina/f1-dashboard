@@ -1,0 +1,63 @@
+{% extends "dashboard/base.html" %}
+{% block title %}F1 Quiz{% endblock %}
+
+{% block extra_head %}
+<style>
+.quiz-form { max-width: 720px; }
+.question-block {
+    background: #1c1c27;
+    border: 1px solid #2a2a38;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+}
+.question-block h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.q-num { color: #e10600; font-weight: 700; margin-right: 8px; }
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #2a2a38;
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 0.9rem;
+    transition: border-color 0.15s, background 0.15s;
+}
+.option-label:hover { border-color: #e10600; background: #23233a; }
+.option-label input { accent-color: #e10600; }
+.submit-row { margin-top: 28px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>F1 Trivia Quiz 🏎️</h1>
+<p style="color:#aaa;margin-bottom:28px">5 randomly chosen questions. How well do you know Formula 1?</p>
+
+<form class="quiz-form" method="POST" action="{% url 'quiz_check' %}">
+    {% csrf_token %}
+
+    {% for q in questions %}
+    <div class="question-block">
+        <h3><span class="q-num">Q{{ forloop.counter }}.</span> {{ q.q }}</h3>
+        {% for opt in q.options %}
+        <label class="option-label">
+            <input type="radio" name="{{ q.q }}" value="{{ opt }}" required>
+            {{ opt }}
+        </label>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="submit-row">
+        <button type="submit">Submit answers →</button>
+    </div>
+</form>
+{% endblock %}

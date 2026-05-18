@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html" %}
+{% block title %}2025 F1 Driver Profiles{% endblock %}
+
+{% block extra_head %}
+<style>
+.driver-card {
+    background: #1c1c27;
+    border: 1px solid #2a2a38;
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.15s;
+}
+.driver-card:hover { border-color: #e10600; transform: translateY(-2px); }
+.driver-card .number {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #e10600;
+    opacity: 0.6;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.driver-card h3 { color: #fff; font-size: 1.1rem; margin-bottom: 4px; }
+.driver-card .team { color: #aaa; font-size: 0.82rem; margin-bottom: 10px; }
+.driver-card .meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.driver-card .meta span { font-size: 0.8rem; color: #888; }
+.driver-card .meta strong { color: #ccc; }
+.driver-card .bio { font-size: 0.85rem; color: #aaa; line-height: 1.6; }
+.champ-badge { background: #4a3800; color: #ffd700; border-radius: 10px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>2025 Driver Profiles</h1>
+
+<div class="filter-bar" style="margin-bottom:24px">
+    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div>
+            <label for="team">Filter by team</label>
+            <select name="team" id="team" onchange="this.form.submit()">
+                <option value="">All teams</option>
+                {% for t in teams %}
+                <option value="{{ t }}" {% if t == selected_team %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% if selected_team %}
+        <a href="{% url 'drivers' %}" class="btn" style="background:#2a2a38">Clear filter</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="grid grid-2">
+    {% for d in drivers %}
+    <div class="driver-card">
+        <div class="number">#{{ d.number }}</div>
+        <h3>{{ d.name }}
+            {% if d.championships > 0 %}
+            <span class="champ-badge">{{ d.championships }}× WDC</span>
+            {% endif %}
+        </h3>
+        <div class="team">{{ d.team }}</div>
+        <div class="meta">
+            <span>{{ d.nationality }}</span>
+            <span>Born: <strong>{{ d.dob }}</strong></span>
+            <span>Code: <strong>{{ d.code }}</strong></span>
+        </div>
+        <div class="bio">{{ d.bio }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

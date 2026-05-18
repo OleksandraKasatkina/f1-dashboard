@@ -1,0 +1,81 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Lap Time Comparison{% endblock %}
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+{% endblock %}
+{% block content %}
+<h1>Lap Time Comparison</h1>
+<p class="page-sub">Pick a season, race, and two driver codes (e.g. VER, NOR, HAM) to compare their lap times.</p>
+
+<div class="filter-bar">
+    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div>
+            <label for="year">Season</label>
+            <select name="year" id="year" onchange="this.form.submit()">
+                {% for y in available_years %}
+                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="round">Race</label>
+            <select name="round" id="round">
+                <option value="">— select —</option>
+                {% for r in race_options %}
+                <option value="{{ r.round }}" {% if selected_round == r.round|stringformat:"s" %}selected{% endif %}>Rd {{ r.round }} – {{ r.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="driver1">Driver 1</label>
+            <input type="text" id="driver1" name="driver1" value="{{ driver1 }}" placeholder="e.g. VER" maxlength="3" style="width:80px;text-transform:uppercase">
+        </div>
+        <div>
+            <label for="driver2">Driver 2</label>
+            <input type="text" id="driver2" name="driver2" value="{{ driver2 }}" placeholder="e.g. NOR" maxlength="3" style="width:80px;text-transform:uppercase">
+        </div>
+        <button type="submit">Compare</button>
+    </form>
+</div>
+
+{% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
+
+{% if chart_data %}
+<div class="card" style="margin-top:4px">
+    <canvas id="lapChart" height="90"></canvas>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if chart_data %}
+<script>
+const datasets = {{ chart_data|safe }}.map((d,i)=>({
+    label: d.label, data: d.data,
+    borderColor: ['#e10600','#00d2ff'][i],
+    backgroundColor: ['#e1060022','#00d2ff22'][i],
+    pointRadius: 3, tension: 0.3,
+    parsing: { xAxisKey:'x', yAxisKey:'y' },
+}));
+new Chart(document.getElementById('lapChart'), {
+    type: 'line', data: { datasets },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { labels: { color:'#fff' } },
+            tooltip: { callbacks: { label: ctx => {
+                const s = ctx.parsed.y, m = Math.floor(s/60);
+                return `${ctx.dataset.label}: ${m}:${(s%60).toFixed(3).padStart(6,'0')}`;
+            }}}
+        },
+        scales: {
+            x: { type:'linear', title:{display:true,text:'Lap',color:'#aaa'}, ticks:{color:'#aaa'}, grid:{color:'#2a2a38'} },
+            y: { title:{display:true,text:'Lap time (seconds)',color:'#aaa'},
+                 ticks:{color:'#aaa', callback: v => { const m=Math.floor(v/60); return `${m}:${(v%60).toFixed(1).padStart(4,'0')}`; }},
+                 grid:{color:'#2a2a38'} }
+        }
+    }
+});
+</script>
+{% endif %}
+{% endblock %}

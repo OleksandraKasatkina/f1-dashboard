@@ -1,0 +1,60 @@
+{% extends "dashboard/base.html" %}
+{% block title %}F1 Standings {{ year }}{% endblock %}
+{% block content %}
+<h1>Championship Standings</h1>
+
+<div class="filter-bar">
+    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div>
+            <label for="year">Season</label>
+            <select name="year" id="year" onchange="this.form.submit()">
+                {% for y in available_years %}
+                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+</div>
+
+{% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
+
+<div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('tab-d',this)">🏆 Drivers</button>
+    <button class="tab-btn" onclick="switchTab('tab-c',this)">🔧 Constructors</button>
+</div>
+
+<div id="tab-d" class="tab-panel active">
+    <table>
+        <thead><tr><th>Pos</th><th>Driver</th><th>Team</th><th>Nationality</th><th>Points</th><th>Wins</th></tr></thead>
+        <tbody>
+        {% for d in drivers %}
+        <tr>
+            <td>{% if d.position == 1 %}<span class="badge badge-gold">1st</span>{% else %}{{ d.position }}{% endif %}</td>
+            <td><strong>{{ d.driver }}</strong></td>
+            <td>{{ d.team }}</td>
+            <td>{{ d.nationality }}</td>
+            <td><strong>{{ d.points }}</strong></td>
+            <td>{{ d.wins }}</td>
+        </tr>
+        {% empty %}<tr><td colspan="6" class="info">No standings data available yet for {{ year }}.</td></tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="tab-c" class="tab-panel">
+    <table>
+        <thead><tr><th>Pos</th><th>Constructor</th><th>Nationality</th><th>Points</th><th>Wins</th></tr></thead>
+        <tbody>
+        {% for c in constructors %}
+        <tr>
+            <td>{% if c.position == 1 %}<span class="badge badge-gold">1st</span>{% else %}{{ c.position }}{% endif %}</td>
+            <td><strong>{{ c.team }}</strong></td>
+            <td>{{ c.nationality }}</td>
+            <td><strong>{{ c.points }}</strong></td>
+            <td>{{ c.wins }}</td>
+        </tr>
+        {% empty %}<tr><td colspan="5" class="info">No standings data available yet for {{ year }}.</td></tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "dashboard/base.html" %}
+{% block title %}F1 History & Legends{% endblock %}
+
+{% block extra_head %}
+<style>
+.era-card {
+    background: #1c1c27;
+    border-left: 4px solid #e10600;
+    border-radius: 0 8px 8px 0;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+}
+.era-card h3 { color: #fff; font-size: 1rem; margin-bottom: 2px; }
+.era-card .years { color: #e10600; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; }
+.era-card p { color: #aaa; font-size: 0.87rem; line-height: 1.6; }
+
+.legend-card {
+    background: #1c1c27;
+    border: 1px solid #2a2a38;
+    border-radius: 10px;
+    padding: 20px;
+}
+.legend-card h3 { color: #fff; font-size: 1.05rem; margin-bottom: 4px; }
+.legend-card .meta { color: #aaa; font-size: 0.82rem; margin-bottom: 10px; line-height: 1.7; }
+.legend-card blockquote {
+    border-left: 3px solid #e10600;
+    padding-left: 12px;
+    color: #ccc;
+    font-style: italic;
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+}
+.legend-card .bio { color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+.champ-badge { background: #4a3800; color: #ffd700; border-radius: 10px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; }
+
+.glossary-item { padding: 12px 0; border-bottom: 1px solid #2a2a38; }
+.glossary-item:last-child { border-bottom: none; }
+.glossary-item dt { color: #e10600; font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+.glossary-item dd { color: #aaa; font-size: 0.85rem; line-height: 1.5; margin: 0; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>F1 History, Legends & Glossary</h1>
+
+<div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('tab-history', this)">🕰️ History of F1</button>
+    <button class="tab-btn" onclick="switchTab('tab-legends', this)">⭐ Legendary Drivers</button>
+    <button class="tab-btn" onclick="switchTab('tab-glossary', this)">📖 Glossary</button>
+</div>
+
+<!-- History -->
+<div id="tab-history" class="tab-panel active">
+    {% for era in eras %}
+    <div class="era-card">
+        <h3>{{ era.era }}</h3>
+        <div class="years">{{ era.years }}</div>
+        <p>{{ era.desc }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Legends -->
+<div id="tab-legends" class="tab-panel">
+    <div class="grid grid-2">
+        {% for l in legends %}
+        <div class="legend-card">
+            <h3>{{ l.name }}
+                <span class="champ-badge">{{ l.championships }}× WDC</span>
+            </h3>
+            <div class="meta">
+                {{ l.nationality }} &nbsp;·&nbsp;
+                {{ l.wins }} wins &nbsp;·&nbsp;
+                {{ l.years }}
+            </div>
+            <blockquote>"{{ l.quote }}"</blockquote>
+            <div class="bio">{{ l.desc }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Glossary -->
+<div id="tab-glossary" class="tab-panel">
+    <div class="card">
+        <dl>
+            {% for term, definition in glossary %}
+            <div class="glossary-item">
+                <dt>{{ term }}</dt>
+                <dd>{{ definition }}</dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </div>
+</div>
+
+{% endblock %}
