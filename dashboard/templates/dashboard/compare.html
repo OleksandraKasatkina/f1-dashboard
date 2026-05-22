@@ -4,45 +4,69 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 {% endblock %}
 {% block content %}
-<h1>Lap Time Comparison</h1>
-<p class="page-sub">Pick a season, race, and two driver codes (e.g. VER, NOR, HAM) to compare their lap times.</p>
-
-<div class="filter-bar">
-    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
-        <div>
-            <label for="year">Season</label>
-            <select name="year" id="year" onchange="this.form.submit()">
-                {% for y in available_years %}
-                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="round">Race</label>
-            <select name="round" id="round">
-                <option value="">— select —</option>
-                {% for r in race_options %}
-                <option value="{{ r.round }}" {% if selected_round == r.round|stringformat:"s" %}selected{% endif %}>Rd {{ r.round }} – {{ r.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="driver1">Driver 1</label>
-            <input type="text" id="driver1" name="driver1" value="{{ driver1 }}" placeholder="e.g. VER" maxlength="3" style="width:80px;text-transform:uppercase">
-        </div>
-        <div>
-            <label for="driver2">Driver 2</label>
-            <input type="text" id="driver2" name="driver2" value="{{ driver2 }}" placeholder="e.g. NOR" maxlength="3" style="width:80px;text-transform:uppercase">
-        </div>
-        <button type="submit">Compare</button>
-    </form>
+<div class="row mb-4">
+    <div class="col-12">
+        <h1>Lap Time Comparison</h1>
+        <p class="text-secondary">Pick a season, race, and two drivers to compare their lap times.</p>
+    </div>
 </div>
 
-{% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
+<div class="card bg-dark border-secondary mb-4">
+    <div class="card-body">
+        <form method="GET" action="" class="row g-3 align-items-end">
+            <div class="col-md-2">
+                <label for="year" class="form-label text-secondary small">Season</label>
+                <select name="year" id="year" class="form-select" onchange="this.form.submit()">
+                    {% for y in available_years %}
+                    <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="round" class="form-label text-secondary small">Race</label>
+                <select name="round" id="round" class="form-select">
+                    <option value="">— Select Race —</option>
+                    {% for r in race_options %}
+                    <option value="{{ r.round }}" {% if selected_round == r.round|stringformat:"s" %}selected{% endif %}>Rd {{ r.round }} – {{ r.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="driver1" class="form-label text-secondary small">Driver 1</label>
+                <select name="driver1" id="driver1" class="form-select">
+                    <option value="">— Select —</option>
+                    {% for d in driver_options %}
+                    <option value="{{ d.code }}" {% if driver1 == d.code %}selected{% endif %}>{{ d.name }} ({{ d.code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="driver2" class="form-label text-secondary small">Driver 2</label>
+                <select name="driver2" id="driver2" class="form-select">
+                    <option value="">— Select —</option>
+                    {% for d in driver_options %}
+                    <option value="{{ d.code }}" {% if driver2 == d.code %}selected{% endif %}>{{ d.name }} ({{ d.code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn f1-btn w-100">Compare</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if error_message %}
+<div class="alert alert-danger border-danger" role="alert">
+    {{ error_message }}
+</div>
+{% endif %}
 
 {% if chart_data %}
-<div class="card" style="margin-top:4px">
-    <canvas id="lapChart" height="90"></canvas>
+<div class="card bg-dark border-secondary shadow-sm">
+    <div class="card-body">
+        <canvas id="lapChart" height="90"></canvas>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

@@ -1,32 +1,90 @@
 {% extends "dashboard/base.html" %}
 {% block title %}F1 Dashboard{% endblock %}
-{% block extra_head %}
-<style>
-.hero { text-align: center; padding: 56px 20px 36px; }
-.hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
-.hero p  { color: #888; font-size: 1rem; max-width: 500px; margin: 0 auto 36px; }
-.feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-.feature-card { background: #1c1c27; border: 1px solid #2a2a38; border-radius: 10px; padding: 22px 18px; text-decoration: none; color: inherit; transition: border-color .2s, transform .15s; display: block; }
-.feature-card:hover { border-color: #e10600; transform: translateY(-2px); }
-.feature-card .icon { font-size: 1.8rem; margin-bottom: 8px; }
-.feature-card h3 { color: #fff; margin-bottom: 5px; font-size: 1rem; }
-.feature-card p  { color: #888; font-size: 0.82rem; line-height: 1.5; }
-.tag-new { display: inline-block; background: #3a0a0a; color: #e10600; font-size: 0.7rem; padding: 1px 7px; border-radius: 10px; margin-bottom: 6px; font-weight: 700; }
-</style>
-{% endblock %}
+
 {% block content %}
-<div class="hero">
-    <h1>F1 Dashboard</h1>
-    <p>Your hub for Formula 1 statistics, history, driver profiles, and more.</p>
+<div class="text-center py-5 mb-4">
+    <h1 class="display-4 fw-bold">F1 Dashboard</h1>
+    <p class="lead text-secondary">Your hub for Formula 1 statistics, history, driver profiles, and more.</p>
 </div>
-<div class="feature-grid">
-    <a href="{% url 'schedule' %}"     class="feature-card"><div class="icon">📅</div><h3>Season Schedule</h3><p>Browse the full calendar from 2018 to today.</p></a>
-    <a href="{% url 'standings' %}"    class="feature-card"><div class="icon">🏆</div><h3>Standings</h3><p>Current drivers' and constructors' championship standings.</p></a>
-    <a href="{% url 'results' %}"      class="feature-card"><div class="icon">🏁</div><h3>Race Results</h3><p>Full results from the most recent Grand Prix and qualifying.</p></a>
-    <a href="{% url 'compare' %}"      class="feature-card"><div class="icon">📊</div><h3>Lap Comparison</h3><p>Compare two drivers' lap times on an interactive chart.</p></a>
-    <a href="{% url 'drivers' %}"      class="feature-card"><div class="icon">🧑‍✈️</div><h3>Driver Profiles</h3><p>Meet every driver on the current grid — stats, bios, and career highlights.</p></a>
-    <a href="{% url 'constructors' %}" class="feature-card"><div class="icon">🔧</div><h3>Constructors</h3><p>All ten teams, their history, base and championship record.</p></a>
-    <a href="{% url 'history' %}"      class="feature-card"><div class="icon">📖</div><h3>F1 History & Legends</h3><p>Explore the sport's greatest eras, iconic drivers, and a full glossary.</p></a>
-    <a href="{% url 'quiz' %}"         class="feature-card"><div class="icon">❓</div><div class="tag-new">Interactive</div><h3>F1 Quiz</h3><p>Test your knowledge. Five random questions — can you score full marks?</p></a>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <div class="col">
+        <a href="{% url 'schedule' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">📅</div>
+                <h5 class="card-title text-danger">Season Schedule</h5>
+                <p class="card-text text-secondary small">Browse the full calendar from 2018 to today.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'standings' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">🏆</div>
+                <h5 class="card-title text-danger">Standings</h5>
+                <p class="card-text text-secondary small">Current drivers' and constructors' championship standings.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'results' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">🏁</div>
+                <h5 class="card-title text-danger">Race Results</h5>
+                <p class="card-text text-secondary small">Full results from the most recent Grand Prix and qualifying.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'compare' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">📊</div>
+                <h5 class="card-title text-danger">Lap Comparison</h5>
+                <p class="card-text text-secondary small">Compare two drivers' lap times on an interactive chart.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'drivers' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">🧑‍✈️</div>
+                <h5 class="card-title text-danger">Driver Profiles</h5>
+                <p class="card-text text-secondary small">Meet every driver on the current grid — stats, bios, and career highlights.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'constructors' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">🔧</div>
+                <h5 class="card-title text-danger">Constructors</h5>
+                <p class="card-text text-secondary small">All ten teams, their history, base and championship record.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'history' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">📖</div>
+                <h5 class="card-title text-danger">F1 History</h5>
+                <p class="card-text text-secondary small">Explore the sport's greatest eras, iconic drivers, and a full glossary.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'quiz' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover">
+            <div class="card-body text-center">
+                <div class="fs-1 mb-2">❓</div>
+                <span class="badge bg-danger mb-2">Interactive</span>
+                <h5 class="card-title text-danger">F1 Quiz</h5>
+                <p class="card-text text-secondary small">Test your knowledge. Five random questions — can you score full marks?</p>
+            </div>
+        </a>
+    </div>
 </div>
+
+<style>
+    .transition-hover { transition: transform 0.2s, border-color 0.2s; }
+    .transition-hover:hover { transform: translateY(-5px); border-color: #e10600 !important; }
+</style>
 {% endblock %}

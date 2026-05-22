@@ -1,37 +1,48 @@
 {% extends "dashboard/base.html" %}
 {% block title %}F1 Schedule {{ year }}{% endblock %}
-{% block content %}
-<h1>Formula 1 Schedule</h1>
-<p class="page-sub">Click a circuit name to see track details.</p>
 
-<div class="filter-bar">
-    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
-        <div>
-            <label for="year">Season</label>
-            <select name="year" id="year" onchange="this.form.submit()">
-                {% for y in available_years %}
-                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-                {% endfor %}
-            </select>
-        </div>
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+    <div>
+        <h1>Formula 1 Schedule</h1>
+        <p class="text-secondary mb-0">Click a circuit name to see track details.</p>
+    </div>
+    <form method="GET" action="" class="d-flex align-items-center gap-2">
+        <label for="year" class="form-label mb-0 text-secondary">Season:</label>
+        <select name="year" id="year" class="form-select bg-dark text-light border-secondary w-auto" onchange="this.form.submit()">
+            {% for y in available_years %}
+            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
     </form>
 </div>
 
-{% if error_message %}<p class="error">{{ error_message }}</p>
+{% if error_message %}
+<div class="alert alert-danger" role="alert">{{ error_message }}</div>
 {% else %}
-<table>
-    <thead><tr><th>#</th><th>Grand Prix</th><th>Country</th><th>Circuit</th><th>Race Date</th></tr></thead>
-    <tbody>
-    {% for event in events %}
-    <tr>
-        <td>{{ event.round }}</td>
-        <td><strong>{{ event.event_name }}</strong></td>
-        <td>{{ event.country }}</td>
-        <td><a href="{% url 'circuit_detail' event.location %}">{{ event.location }}</a></td>
-        <td>{{ event.date }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-dark table-striped table-hover align-middle border-secondary">
+        <thead>
+            <tr class="text-danger text-uppercase small">
+                <th>#</th>
+                <th>Grand Prix</th>
+                <th>Country</th>
+                <th>Circuit</th>
+                <th>Race Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.round }}</td>
+                <td class="fw-bold">{{ event.event_name }}</td>
+                <td>{{ event.country }}</td>
+                <td><a href="{% url 'circuit_detail' event.location %}" class="text-decoration-none text-danger">{{ event.location }}</a></td>
+                <td>{{ event.date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}
 {% endblock %}

@@ -1,47 +1,30 @@
 {% extends "dashboard/base.html" %}
-{% block title %}F1 Constructors 2025{% endblock %}
-
-{% block extra_head %}
-<style>
-.team-card {
-    background: #1c1c27;
-    border: 1px solid #2a2a38;
-    border-radius: 10px;
-    padding: 0;
-    overflow: hidden;
-    transition: transform 0.15s;
-}
-.team-card:hover { transform: translateY(-2px); }
-.team-header {
-    height: 8px;
-}
-.team-body { padding: 18px 20px; }
-.team-body h3 { color: #fff; margin-bottom: 4px; }
-.team-body .meta { color: #888; font-size: 0.82rem; margin-bottom: 10px; line-height: 1.7; }
-.team-body .meta strong { color: #ccc; }
-.team-body .desc { color: #aaa; font-size: 0.85rem; line-height: 1.6; }
-.champ-badge { background: #4a3800; color: #ffd700; border-radius: 10px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; margin-left: 6px; }
-</style>
-{% endblock %}
+{% block title %}F1 Constructors{% endblock %}
 
 {% block content %}
-<h1>2025 Constructors</h1>
+<h1 class="mb-4">Constructors</h1>
 
-<div class="grid grid-2" style="margin-top:8px">
+<div class="row row-cols-1 row-cols-md-2 g-4">
     {% for c in constructors %}
-    <div class="team-card">
-        <div class="team-header" style="background:{{ c.color }}"></div>
-        <div class="team-body">
-            <h3>{{ c.name }}
-                {% if c.championships > 0 %}
-                <span class="champ-badge">{{ c.championships }}× WCC</span>
-                {% endif %}
-            </h3>
-            <div class="meta">
-                <strong>Base:</strong> {{ c.base }}<br>
-                <strong>Est.:</strong> {{ c.founded }}
+    <div class="col">
+        <div class="card h-100 bg-dark border-secondary overflow-hidden shadow-sm">
+            <div style="height: 10px; background-color: {{ c.color }};"></div>
+            
+            <div class="card-body">
+                <h3 class="card-title text-light mb-1">
+                    {{ c.name }}
+                    {% if c.championships > 0 %}
+                    <span class="badge bg-warning text-dark ms-2 fs-6">{{ c.championships }}× WCC</span>
+                    {% endif %}
+                </h3>
+                
+                <div class="text-secondary small mb-3">
+                    <strong>Base:</strong> <span class="text-light">{{ c.base }}</span> &nbsp;|&nbsp; 
+                    <strong>Est:</strong> <span class="text-light">{{ c.founded }}</span>
+                </div>
+                
+                <p class="card-text text-light opacity-75 small">{{ c.desc }}</p>
             </div>
-            <div class="desc">{{ c.desc }}</div>
         </div>
     </div>
     {% endfor %}

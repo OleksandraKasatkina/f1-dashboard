@@ -1,59 +1,87 @@
 {% extends "dashboard/base.html" %}
 {% block title %}Latest F1 Results{% endblock %}
-{% block content %}
-<h1>Race Results{% if event_name %} — {{ event_name }}{% endif %}</h1>
 
-<div class="filter-bar">
-    <form method="GET" action="" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
-        <div>
-            <label for="year">Season</label>
-            <select name="year" id="year" onchange="this.form.submit()">
-                {% for y in available_years %}
-                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-                {% endfor %}
-            </select>
-        </div>
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+    <div>
+        <h1>Race Results</h1>
+        {% if event_name %}<p class="text-secondary mb-0 fs-5">{{ event_name }}</p>{% endif %}
+    </div>
+    <form method="GET" action="" class="d-flex align-items-center gap-2">
+        <label for="year" class="form-label mb-0 text-secondary">Season:</label>
+        <select name="year" id="year" class="form-select bg-dark text-light border-secondary w-auto" onchange="this.form.submit()">
+            {% for y in available_years %}
+            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
     </form>
 </div>
 
-{% if error_message %}<p class="error">{{ error_message }}</p>
+{% if error_message %}
+<div class="alert alert-danger" role="alert">{{ error_message }}</div>
 {% else %}
-<div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('tab-race',this)">🏁 Race</button>
-    <button class="tab-btn" onclick="switchTab('tab-quali',this)">⏱️ Qualifying</button>
-</div>
-<div id="tab-race" class="tab-panel active">
-    <table>
-        <thead><tr><th>Pos</th><th>Driver</th><th>Team</th><th>Points</th><th>Status</th></tr></thead>
-        <tbody>
-        {% for r in race_results %}
-        <tr>
-            <td>{% if r.position == 1 %}<span class="badge badge-gold">1st</span>{% else %}{{ r.position }}{% endif %}</td>
-            <td><strong>{{ r.driver }}</strong></td>
-            <td>{{ r.team }}</td>
-            <td>{{ r.points }}</td>
-            <td>{% if r.status == 'Finished' %}<span class="badge badge-green">✓ Finished</span>{% else %}<span class="badge badge-red">{{ r.status }}</span>{% endif %}</td>
-        </tr>
-        {% empty %}<tr><td colspan="5" class="info">No race data available.</td></tr>{% endfor %}
-        </tbody>
-    </table>
-</div>
-<div id="tab-quali" class="tab-panel">
-    <table>
-        <thead><tr><th>Pos</th><th>Driver</th><th>Team</th><th>Q1</th><th>Q2</th><th>Q3</th></tr></thead>
-        <tbody>
-        {% for r in quali_results %}
-        <tr>
-            <td>{{ r.position }}</td>
-            <td><strong>{{ r.driver }}</strong></td>
-            <td>{{ r.team }}</td>
-            <td>{{ r.q1 }}</td>
-            <td>{{ r.q2 }}</td>
-            <td>{{ r.q3 }}</td>
-        </tr>
-        {% empty %}<tr><td colspan="6" class="info">No qualifying data available.</td></tr>{% endfor %}
-        </tbody>
-    </table>
+<ul class="nav nav-pills mb-4" id="results-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="race-tab" data-bs-toggle="pill" data-bs-target="#race" type="button" role="tab">🏁 Race</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="quali-tab" data-bs-toggle="pill" data-bs-target="#quali" type="button" role="tab">⏱️ Qualifying</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="results-tabContent">
+    <div class="tab-pane fade show active" id="race" role="tabpanel">
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover align-middle border-secondary">
+                <thead>
+                    <tr class="text-danger text-uppercase small"><th>Pos</th><th>Driver</th><th>Team</th><th>Points</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                {% for r in race_results %}
+                    <tr>
+                        <td>
+                            {% if r.position == 1 %}<span class="badge bg-warning text-dark">1st</span>
+                            {% else %}{{ r.position }}{% endif %}
+                        </td>
+                        <td class="fw-bold">{{ r.driver }}</td>
+                        <td>{{ r.team }}</td>
+                        <td>{{ r.points }}</td>
+                        <td>
+                            {% if r.status == 'Finished' %}<span class="badge bg-success">✓ Finished</span>
+                            {% else %}<span class="badge bg-secondary">{{ r.status }}</span>{% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="5" class="text-center text-secondary fst-italic py-4">No race data available.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="tab-pane fade" id="quali" role="tabpanel">
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover align-middle border-secondary">
+                <thead>
+                    <tr class="text-danger text-uppercase small"><th>Pos</th><th>Driver</th><th>Team</th><th>Q1</th><th>Q2</th><th>Q3</th></tr>
+                </thead>
+                <tbody>
+                {% for r in quali_results %}
+                    <tr>
+                        <td>{{ r.position }}</td>
+                        <td class="fw-bold">{{ r.driver }}</td>
+                        <td>{{ r.team }}</td>
+                        <td>{{ r.q1 }}</td>
+                        <td>{{ r.q2 }}</td>
+                        <td>{{ r.q3 }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="6" class="text-center text-secondary fst-italic py-4">No qualifying data available.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

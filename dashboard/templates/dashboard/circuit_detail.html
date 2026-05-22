@@ -1,40 +1,52 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ location }} – Circuit Info{% endblock %}
-{% block extra_head %}
-<style>
-.circuit-header { display: flex; align-items: flex-start; gap: 28px; margin-bottom: 28px; flex-wrap: wrap; }
-.circuit-title h1 { margin-bottom: 4px; }
-.circuit-title .country { color: #888; font-size: 0.9rem; }
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 28px; }
-.stat-box { background: #1c1c27; border: 1px solid #2a2a38; border-radius: 8px; padding: 14px 16px; }
-.stat-box .label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
-.stat-box .value { color: #fff; font-size: 1.1rem; font-weight: 700; }
-.desc-card { background: #1c1c27; border: 1px solid #2a2a38; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; line-height: 1.7; color: #ccc; }
-.ext-link { display: inline-flex; align-items: center; gap: 6px; }
-</style>
-{% endblock %}
+
 {% block content %}
-<div style="margin-bottom:16px">
-    <a href="{% url 'schedule' %}" class="btn btn-ghost" style="font-size:.82rem;padding:6px 14px">← Back to Schedule</a>
+<div class="mb-4">
+    <a href="{% url 'schedule' %}" class="btn btn-outline-secondary btn-sm">← Back to Schedule</a>
 </div>
 
-<div class="circuit-header">
-    <div class="circuit-title">
-        <h1>{{ location }}</h1>
-        <div class="country">{{ info.country }} &nbsp;·&nbsp; {{ info.city }}</div>
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold mb-0">{{ location }}</h1>
+        <p class="lead text-secondary">{{ info.country }} &nbsp;·&nbsp; {{ info.city }}</p>
     </div>
 </div>
 
-<div class="stats-grid">
-    <div class="stat-box"><div class="label">Circuit length</div><div class="value">{{ info.length_km }} km</div></div>
-    <div class="stat-box"><div class="label">Number of turns</div><div class="value">{{ info.turns }}</div></div>
-    <div class="stat-box"><div class="label">First Grand Prix</div><div class="value">{{ info.first_gp }}</div></div>
-    <div class="stat-box"><div class="label">Lap record</div><div class="value" style="font-size:.9rem">{{ info.lap_record }}</div></div>
+<div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
+    <div class="col">
+        <div class="card bg-dark border-secondary h-100 text-center py-3">
+            <div class="text-secondary small text-uppercase fw-bold mb-1">Circuit Length</div>
+            <div class="fs-4 fw-bold text-light">{{ info.length_km }} km</div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card bg-dark border-secondary h-100 text-center py-3">
+            <div class="text-secondary small text-uppercase fw-bold mb-1">Number of Turns</div>
+            <div class="fs-4 fw-bold text-light">{{ info.turns }}</div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card bg-dark border-secondary h-100 text-center py-3">
+            <div class="text-secondary small text-uppercase fw-bold mb-1">First Grand Prix</div>
+            <div class="fs-4 fw-bold text-light">{{ info.first_gp }}</div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card bg-dark border-secondary h-100 text-center py-3">
+            <div class="text-secondary small text-uppercase fw-bold mb-1">Lap Record</div>
+            <div class="fs-6 fw-bold text-light mt-2">{{ info.lap_record }}</div>
+        </div>
+    </div>
 </div>
 
-<div class="desc-card">{{ info.desc }}</div>
+<div class="card bg-dark border-secondary mb-4">
+    <div class="card-body text-light opacity-75 lh-lg">
+        {{ info.desc }}
+    </div>
+</div>
 
-<a href="{{ wiki_url }}" target="_blank" rel="noopener" class="btn ext-link">
+<a href="{{ wiki_url }}" target="_blank" rel="noopener" class="btn f1-btn">
     Read more on Wikipedia ↗
 </a>
 {% endblock %}
