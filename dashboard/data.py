@@ -1,5 +1,3 @@
-# dashboard/data.py
-
 CURRENT_YEAR = 2026
 AVAILABLE_YEARS = list(range(2018, CURRENT_YEAR + 1))
 
@@ -31,37 +29,65 @@ CIRCUITS = {
 }
 
 DRIVERS_2026 = [
-    {'name': 'Max Verstappen',   'code': 'VER', 'number': 1,  'team': 'Red Bull Racing', 'nationality': '🇳🇱 Dutch',       'dob': '30 Sep 1997', 'championships': 4, 'wiki': 'Max_Verstappen',                    'bio': 'Four-time world champion, known for his aggressive overtaking and relentless pace. Became the youngest F1 race winner in history at the 2016 Spanish Grand Prix aged 18.'},
-    {'name': 'Lando Norris',     'code': 'NOR', 'number': 4,  'team': 'McLaren',         'nationality': '🇬🇧 British',     'dob': '13 Nov 1999', 'championships': 0, 'wiki': 'Lando_Norris',                      'bio': 'Known for his speed and entertaining personality. Secured his first race win in 2024 at the Miami Grand Prix and mounted a genuine championship challenge.'},
-    {'name': 'Charles Leclerc',  'code': 'LEC', 'number': 16, 'team': 'Ferrari',         'nationality': '🇲🇨 Monégasque',  'dob': '16 Oct 1997', 'championships': 0, 'wiki': 'Charles_Leclerc',                   'bio': 'A Ferrari favourite and one of the fastest qualifiers on the grid. Won his home race in Monaco in 2024 after years of near-misses at the principality.'},
-    {'name': 'Carlos Sainz',     'code': 'SAI', 'number': 55, 'team': 'Williams',        'nationality': '🇪🇸 Spanish',     'dob': '1 Sep 1994',  'championships': 0, 'wiki': 'Carlos_Sainz_Jr.',                  'bio': 'Son of rally legend Carlos Sainz Sr. Known for consistent performances and three Grand Prix victories. Joined Williams for 2025 after leaving Ferrari.'},
-    {'name': 'George Russell',   'code': 'RUS', 'number': 63, 'team': 'Mercedes',        'nationality': '🇬🇧 British',     'dob': '15 Feb 1998', 'championships': 0, 'wiki': 'George_Russell_(racing_driver)',    'bio': "Mercedes' number-one driver since 2022. A precise, technical driver who spent three formative seasons at Williams before taking his first win at the 2022 Brazilian Grand Prix."},
-    {'name': 'Lewis Hamilton',   'code': 'HAM', 'number': 44, 'team': 'Ferrari',         'nationality': '🇬🇧 British',     'dob': '7 Jan 1985',  'championships': 7, 'wiki': 'Lewis_Hamilton',                    'bio': 'The most decorated driver in F1 history with seven world championships. Made a blockbuster move to Ferrari for 2025 — one of the most anticipated driver moves ever.'},
-    {'name': 'Fernando Alonso',  'code': 'ALO', 'number': 14, 'team': 'Aston Martin',    'nationality': '🇪🇸 Spanish',     'dob': '29 Jul 1981', 'championships': 2, 'wiki': 'Fernando_Alonso',                   'bio': 'Two-time champion widely regarded as one of the greatest of all time. Still racing at the highest level in his 40s, proving that experience and racecraft never fade.'},
-    {'name': 'Oscar Piastri',    'code': 'PIA', 'number': 81, 'team': 'McLaren',         'nationality': '🇦🇺 Australian',  'dob': '6 Apr 2001',  'championships': 0, 'wiki': 'Oscar_Piastri',                     'bio': 'Formula 2 and Formula 3 champion who burst onto the F1 scene in 2023. Won his first Grand Prix in Hungary 2024 and is widely tipped as a future champion.'},
-    {'name': 'Lance Stroll',     'code': 'STR', 'number': 18, 'team': 'Aston Martin',    'nationality': '🇨🇦 Canadian',    'dob': '29 Oct 1998', 'championships': 0, 'wiki': 'Lance_Stroll',                      'bio': 'Son of Aston Martin owner Lawrence Stroll. Has shown flashes of brilliance in changeable conditions, with several podium finishes and a pole position at Istanbul 2020.'},
-    {'name': 'Nico Hülkenberg',  'code': 'HUL', 'number': 27, 'team': 'Sauber',          'nationality': '🇩🇪 German',      'dob': '19 Aug 1987', 'championships': 0, 'wiki': 'Nico_Hülkenberg',                   'bio': 'Spent years as F1\'s most experienced driver without a podium before finally breaking the record. Joined Sauber as they transition to become the Audi works team.'},
-    {'name': 'Yuki Tsunoda',     'code': 'TSU', 'number': 22, 'team': 'RB',              'nationality': '🇯🇵 Japanese',    'dob': '11 May 2000', 'championships': 0, 'wiki': 'Yuki_Tsunoda',                      'bio': 'Energetic and quick, Tsunoda is known for his aggressive style and memorable radio messages. Backed by Honda, he is one of the few Japanese drivers on the current grid.'},
-    {'name': 'Pierre Gasly',     'code': 'GAS', 'number': 10, 'team': 'Alpine',          'nationality': '🇫🇷 French',      'dob': '7 Feb 1996',  'championships': 0, 'wiki': 'Pierre_Gasly',                      'bio': 'Won a memorable Italian Grand Prix in 2020 for AlphaTauri. A fan favourite for his emotional celebrations and determined racing style.'},
-    {'name': 'Esteban Ocon',     'code': 'OCO', 'number': 31, 'team': 'Haas',            'nationality': '🇫🇷 French',      'dob': '17 Sep 1996', 'championships': 0, 'wiki': 'Esteban_Ocon',                      'bio': 'Fought his way into F1 from a humble background. Won his first race at the 2021 Hungarian Grand Prix in dramatic circumstances before joining Haas for 2025.'},
-    {'name': 'Valtteri Bottas',  'code': 'BOT', 'number': 77, 'team': 'Sauber',          'nationality': '🇫🇮 Finnish',     'dob': '28 Aug 1989', 'championships': 0, 'wiki': 'Valtteri_Bottas',                   'bio': '10-time race winner and former Mercedes driver alongside Hamilton. Known for his speed, consistent performances, and refreshingly direct personality.'},
-    {'name': 'Kevin Magnussen',  'code': 'MAG', 'number': 20, 'team': 'Haas',            'nationality': '🇩🇰 Danish',      'dob': '5 Oct 1992',  'championships': 0, 'wiki': 'Kevin_Magnussen',                   'bio': 'A no-nonsense racer known for defending his position aggressively. His dramatic return to Haas in 2022 — announced days before the season opener — is one of F1\'s great comeback stories.'},
-    {'name': 'Alexander Albon',  'code': 'ALB', 'number': 23, 'team': 'Williams',        'nationality': '🇹🇭 Thai',        'dob': '23 Mar 1996', 'championships': 0, 'wiki': 'Alexander_Albon',                   'bio': 'Half-Thai, half-British driver who has become Williams\' consistent anchor. Known for his smooth style and remarkable ability to extract the maximum from a slower car.'},
+    # McLaren-Mercedes
+    {'name': 'Lando Norris',         'code': 'NOR', 'number': 1,  'team': 'McLaren',         'nationality': '🇬🇧 British',     'dob': '13 Nov 1999', 'championships': 1, 'wiki': 'Lando_Norris',                      'bio': 'Taking the #1 on his car after an incredible championship-winning campaign.'},
+    {'name': 'Oscar Piastri',        'code': 'PIA', 'number': 81, 'team': 'McLaren',         'nationality': '🇦🇺 Australian',  'dob': '6 Apr 2001',  'championships': 0, 'wiki': 'Oscar_Piastri',                     'bio': 'Calm, analytical, and incredibly fast, forming a formidable duo with Norris.'},
+    
+    # Red Bull Racing-Red Bull Ford
+    {'name': 'Max Verstappen',       'code': 'VER', 'number': 33, 'team': 'Red Bull Racing', 'nationality': '🇳🇱 Dutch',       'dob': '30 Sep 1997', 'championships': 4, 'wiki': 'Max_Verstappen',                    'bio': 'Four-time world champion. Leading Red Bull into the new Ford powertrain era.'},
+    {'name': 'Isack Hadjar',         'code': 'HAD', 'number': 6,  'team': 'Red Bull Racing', 'nationality': '🇫🇷 French',      'dob': '28 Sep 2004', 'championships': 0, 'wiki': 'Isack_Hadjar',                      'bio': 'Earned his promotion to the main team after impressive feeder series performances.'},
+    
+    # Ferrari
+    {'name': 'Charles Leclerc',      'code': 'LEC', 'number': 16, 'team': 'Ferrari',         'nationality': '🇲🇨 Monégasque',  'dob': '16 Oct 1997', 'championships': 0, 'wiki': 'Charles_Leclerc',                   'bio': 'A Ferrari prodigy and one of the fastest qualifiers on the grid.'},
+    {'name': 'Lewis Hamilton',       'code': 'HAM', 'number': 44, 'team': 'Ferrari',         'nationality': '🇬🇧 British',     'dob': '7 Jan 1985',  'championships': 7, 'wiki': 'Lewis_Hamilton',                    'bio': 'The most decorated driver in F1 history chasing his eighth world title in red.'},
+    
+    # Mercedes
+    {'name': 'George Russell',       'code': 'RUS', 'number': 63, 'team': 'Mercedes',        'nationality': '🇬🇧 British',     'dob': '15 Feb 1998', 'championships': 0, 'wiki': 'George_Russell_(racing_driver)',    'bio': 'Stepped up as the team leader at Mercedes following Hamilton’s departure.'},
+    {'name': 'Kimi Antonelli',       'code': 'ANT', 'number': 12, 'team': 'Mercedes',        'nationality': '🇮🇹 Italian',     'dob': '25 Aug 2006', 'championships': 0, 'wiki': 'Andrea_Kimi_Antonelli',             'bio': 'A highly touted Mercedes junior who bypassed F3 to fast-track into F1.'},
+    
+    # Aston Martin Aramco-Honda
+    {'name': 'Fernando Alonso',      'code': 'ALO', 'number': 14, 'team': 'Aston Martin',    'nationality': '🇪🇸 Spanish',     'dob': '29 Jul 1981', 'championships': 2, 'wiki': 'Fernando_Alonso',                   'bio': 'Two-time champion and veteran master of racecraft. Reunited with Honda engines in 2026.'},
+    {'name': 'Lance Stroll',         'code': 'STR', 'number': 18, 'team': 'Aston Martin',    'nationality': '🇨🇦 Canadian',    'dob': '29 Oct 1998', 'championships': 0, 'wiki': 'Lance_Stroll',                      'bio': 'Brings immense experience to the team with flashes of brilliance in wet conditions.'},
+    
+    # Alpine-Mercedes
+    {'name': 'Pierre Gasly',         'code': 'GAS', 'number': 10, 'team': 'Alpine',          'nationality': '🇫🇷 French',      'dob': '7 Feb 1996',  'championships': 0, 'wiki': 'Pierre_Gasly',                      'bio': 'The experienced team leader at Alpine.'},
+    {'name': 'Franco Colapinto',     'code': 'COL', 'number': 43, 'team': 'Alpine',          'nationality': '🇦🇷 Argentine',   'dob': '27 May 2003', 'championships': 0, 'wiki': 'Franco_Colapinto',                  'bio': 'Secured a full-time seat at Alpine after making a huge impression as a rookie.'},
+    
+    # Williams-Mercedes
+    {'name': 'Alexander Albon',      'code': 'ALB', 'number': 23, 'team': 'Williams',        'nationality': '🇹🇭 Thai',        'dob': '23 Mar 1996', 'championships': 0, 'wiki': 'Alexander_Albon',                   'bio': 'The anchor of the Williams rebuild. Known for his incredible tire management.'},
+    {'name': 'Carlos Sainz Jr.',     'code': 'SAI', 'number': 55, 'team': 'Williams',        'nationality': '🇪🇸 Spanish',     'dob': '1 Sep 1994',  'championships': 0, 'wiki': 'Carlos_Sainz_Jr.',                  'bio': 'A highly intelligent race winner pushing Williams back to the front of the grid.'},
+    
+    # Racing Bulls-Red Bull Ford
+    {'name': 'Liam Lawson',          'code': 'LAW', 'number': 30, 'team': 'Racing Bulls',    'nationality': '🇳🇿 New Zealander','dob': '11 Feb 2002', 'championships': 0, 'wiki': 'Liam_Lawson',                     'bio': 'Known for his adaptability and cool head under pressure.'},
+    {'name': 'Arvid Lindblad',       'code': 'LIN', 'number': 41, 'team': 'Racing Bulls',    'nationality': '🇬🇧 British',     'dob': '8 Aug 2007',  'championships': 0, 'wiki': 'Arvid_Lindblad',                    'bio': 'Red Bull junior prospect who rapidly ascended the feeder series ladder.'},
+    
+    # Haas-Ferrari
+    {'name': 'Esteban Ocon',         'code': 'OCO', 'number': 31, 'team': 'Haas',            'nationality': '🇫🇷 French',      'dob': '17 Sep 1996', 'championships': 0, 'wiki': 'Esteban_Ocon',                      'bio': 'A proven race winner who moved to Haas to lead their project.'},
+    {'name': 'Oliver Bearman',       'code': 'BEA', 'number': 87, 'team': 'Haas',            'nationality': '🇬🇧 British',     'dob': '8 May 2005',  'championships': 0, 'wiki': 'Oliver_Bearman',                    'bio': 'Ferrari junior highly rated for his raw pace and spectacular substitute performances.'},
+    
+    # Audi
+    {'name': 'Nico Hülkenberg',      'code': 'HUL', 'number': 27, 'team': 'Audi',            'nationality': '🇩🇪 German',      'dob': '19 Aug 1987', 'championships': 0, 'wiki': 'Nico_Hülkenberg',                   'bio': 'The experienced German chosen to lead Audi’s historic entry into Formula 1.'},
+    {'name': 'Gabriel Bortoleto',    'code': 'BOR', 'number': 5,  'team': 'Audi',            'nationality': '🇧🇷 Brazilian',   'dob': '14 Oct 2004', 'championships': 0, 'wiki': 'Gabriel_Bortoleto',                 'bio': 'Brought in to be the young foundation of the new Audi works team.'},
+    
+    # Cadillac-Ferrari
+    {'name': 'Sergio Pérez',         'code': 'PER', 'number': 11, 'team': 'Cadillac',        'nationality': '🇲🇽 Mexican',     'dob': '26 Jan 1990', 'championships': 0, 'wiki': 'Sergio_Pérez',                      'bio': 'Veteran driver bringing his vast experience to the new American Cadillac team.'},
+    {'name': 'Valtteri Bottas',      'code': 'BOT', 'number': 77, 'team': 'Cadillac',        'nationality': '🇫🇮 Finnish',     'dob': '28 Aug 1989', 'championships': 0, 'wiki': 'Valtteri_Bottas',                   'bio': 'Experienced multiple race winner joining the new Cadillac project.'},
 ]
 
 DRIVER_MAP = {d['code']: d for d in DRIVERS_2026}
 
 CONSTRUCTORS_2026 = [
-    {'name': 'Red Bull Racing', 'base': 'Milton Keynes, UK',    'founded': 2005, 'championships': 6,  'color': '#3671C6', 'desc': 'Dominant force of the 2010s and early 2020s. Powered by Honda RBPT engines and home to four-time champion Max Verstappen.'},
-    {'name': 'Ferrari',         'base': 'Maranello, Italy',     'founded': 1950, 'championships': 16, 'color': '#E8002D', 'desc': 'The most storied team in F1 history. Signed Lewis Hamilton for 2025 in one of the sport\'s most anticipated driver moves.'},
-    {'name': 'McLaren',         'base': 'Woking, UK',           'founded': 1966, 'championships': 8,  'color': '#FF8000', 'desc': 'Back at the front after years of rebuilding. The Norris–Piastri partnership is one of the most exciting on the grid.'},
-    {'name': 'Mercedes',        'base': 'Brackley, UK',         'founded': 1954, 'championships': 8,  'color': '#27F4D2', 'desc': 'Eight-time constructors\' champions, dominated from 2014–2021. Rebuilding around George Russell after Hamilton\'s departure to Ferrari.'},
-    {'name': 'Aston Martin',    'base': 'Silverstone, UK',      'founded': 2021, 'championships': 0,  'color': '#229971', 'desc': 'Backed by Lawrence Stroll\'s consortium. Aiming to become a front-running team by the mid-2020s with Alonso and Stroll.'},
-    {'name': 'Alpine',          'base': 'Enstone, UK',          'founded': 2021, 'championships': 0,  'color': '#0093CC', 'desc': 'The works Renault team, rebranded as Alpine. Gasly leads the French manufacturer\'s F1 effort.'},
-    {'name': 'Williams',        'base': 'Grove, UK',            'founded': 1977, 'championships': 7,  'color': '#64C4FF', 'desc': 'One of F1\'s most successful constructors historically. Showing signs of revival under new ownership with Albon and Sainz.'},
-    {'name': 'RB',              'base': 'Faenza, Italy',        'founded': 1985, 'championships': 0,  'color': '#6692FF', 'desc': 'Red Bull\'s sister team — formerly Toro Rosso and AlphaTauri. Serves as Red Bull\'s driver development programme.'},
-    {'name': 'Haas',            'base': 'Kannapolis, USA',      'founded': 2016, 'championships': 0,  'color': '#B6BABD', 'desc': 'The only American-owned team on the grid. A customer team running Ferrari power units and components.'},
-    {'name': 'Sauber',          'base': 'Hinwil, Switzerland',  'founded': 1993, 'championships': 0,  'color': '#52E252', 'desc': 'Transitioning to become the Audi works team from 2026. Racing under the Sauber name during the transition period.'},
+    {'name': 'McLaren',         'base': 'Woking, UK',           'founded': 1966, 'championships': 8,  'color': '#FF8000', 'desc': 'Powered by Mercedes engines. Entering 2026 with a championship-winning pedigree.'},
+    {'name': 'Red Bull Racing', 'base': 'Milton Keynes, UK',    'founded': 2005, 'championships': 6,  'color': '#3671C6', 'desc': 'Entering a new era in 2026 manufacturing their own Red Bull Ford powertrains.'},
+    {'name': 'Ferrari',         'base': 'Maranello, Italy',     'founded': 1950, 'championships': 16, 'color': '#E8002D', 'desc': 'The most storied team in F1 history. Boasts a massive driver lineup of Hamilton and Leclerc.'},
+    {'name': 'Mercedes',        'base': 'Brackley, UK',         'founded': 1954, 'championships': 8,  'color': '#27F4D2', 'desc': 'Eight-time champions looking to dominate the 2026 engine regulations.'},
+    {'name': 'Aston Martin',    'base': 'Silverstone, UK',      'founded': 2021, 'championships': 0,  'color': '#229971', 'desc': 'Now the official Honda works team for 2026. Designed by Adrian Newey.'},
+    {'name': 'Alpine',          'base': 'Enstone, UK',          'founded': 2021, 'championships': 0,  'color': '#FF87B2', 'desc': 'Transitioned from a works team to a customer Mercedes engine model for the 2026 regulations.'},
+    {'name': 'Williams',        'base': 'Grove, UK',            'founded': 1977, 'championships': 7,  'color': '#64C4FF', 'desc': 'One of F1\'s legacy teams. Continues its rebuilding phase with a highly experienced driver pairing.'},
+    {'name': 'Racing Bulls',    'base': 'Faenza, Italy',        'founded': 1985, 'championships': 0,  'color': '#6692FF', 'desc': 'Red Bull\'s sister team. Powered by the new Red Bull Ford powertrains.'},
+    {'name': 'Haas',            'base': 'Kannapolis, USA',      'founded': 2016, 'championships': 0,  'color': '#FFFFFF', 'desc': 'The American squad relying on a close technical partnership with Ferrari.'},
+    {'name': 'Audi',            'base': 'Hinwil, Switzerland',  'founded': 2026, 'championships': 0,  'color': '#F50537', 'desc': 'The German automotive giant officially enters F1 as a works team in 2026.'},
+    {'name': 'Cadillac',        'base': 'Detroit, USA',         'founded': 2026, 'championships': 0,  'color': '#000000', 'desc': 'The 11th team on the grid, backed by General Motors and running Ferrari customer engines.'},
 ]
 
 LEGENDS = [
