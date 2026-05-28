@@ -2,11 +2,17 @@ import json
 import random
 import base64
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
-
+from django.views.generic import TemplateView, View, CreateView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import UserProfile
+from .forms import CustomRegisterForm, UserProfileForm
 from . import data
 from . import services
 
+# ── Main Pages ────────────────────────────────────────────────────────────────
 class HomeView(TemplateView):
     template_name = 'dashboard/home.html'
 
@@ -229,3 +235,56 @@ class QuizCheckView(View):
 
     def get(self, request, *args, **kwargs):
         return redirect('quiz')
+
+# ── Authentication Views ──────────────────────────────────────────────────────
+class RegisterView(CreateView):
+    template_name = 'dashboard/register.html'
+    form_class = CustomRegisterForm
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Account created successfully! You can now log in.")
+        return super().form_valid(form)
+
+
+class CustomLoginView(LoginView):
+    template_name = 'dashboard/login.html'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+
+class CustomLogoutView(LogoutView):
+    next_page = 'home'
+
+
+# ── Profile & Customization Views ─────────────────────────────────────────────
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/profile.html'
+    login_url = 'login' # Redirects to login page if user is anonymous
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Safely fetch or initialize a profile record for the active user
+        profile, created = UserProfile.objects.get_or_create(user=self.request.user)
+        form = UserProfileForm(instance=profile)
+        
+        # Pass favorite driver/team objects if they exist to display custom elements
+        context.update({
+            'form': form,
+            'favorite_driver_data': data.DRIVER_MAP.get(profile.favorite_driver),
+            'favorite_team_data': next((t for t in data.CONSTRUCTORS_2026 if t['name'] == profile.favorite_team), None)
+        })
+        return context
+
+    def post(self, request, *args, **kwargs):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        form = UserProfileForm(request.POST, instance=profile)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your preferences have been updated successfully!")
+            return redirect('profile')
+            
+        return render(request, self.template_name, {'form': form})

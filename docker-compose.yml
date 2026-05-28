@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    # The 'volumes' directive maps your local project folder to /app in the container.
+    # This enables hot-reloading: if you edit a Python or HTML file locally, 
+    # the changes will immediately reflect in the running container.

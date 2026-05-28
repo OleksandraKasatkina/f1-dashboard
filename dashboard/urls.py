@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     HomeView, ScheduleView, StandingsView, ResultsView, CompareView,
     DriversView, DriverDetailView, ConstructorsView, HistoryView,
-    QuizView, QuizCheckView, CircuitDetailView
+    QuizView, QuizCheckView, CircuitDetailView,
+    RegisterView, CustomLoginView, CustomLogoutView, ProfileView # Added ProfileView
 )
 
 urlpatterns = [
@@ -18,4 +19,10 @@ urlpatterns = [
     path('quiz/', QuizView.as_view(), name='quiz'),
     path('quiz/check/', QuizCheckView.as_view(), name='quiz_check'),
     path('circuit/<str:location>/', CircuitDetailView.as_view(), name='circuit_detail'),
+    
+    # Auth paths
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('profile/', ProfileView.as_view(), name='profile'), # New path
 ]

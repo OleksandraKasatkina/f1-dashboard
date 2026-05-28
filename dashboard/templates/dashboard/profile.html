@@ -1,0 +1,86 @@
+{% extends "dashboard/base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold mb-1">Personal Dashboard</h1>
+        <p class="text-secondary">Customize your Formula 1 preferences and fan profile.</p>
+    </div>
+
+    <div class="col-lg-5">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success border-success bg-transparent text-success mb-4 text-center" role="alert">
+                    ✅ {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card bg-dark border-secondary shadow-sm">
+            <div class="card-header border-secondary py-3">
+                <h5 class="mb-0 text-light fw-bold">Fan Preferences</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-4">
+                            <label class="form-label text-secondary small fw-bold text-uppercase">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn f1-btn w-100 py-2 mt-2">Save Preferences</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card bg-dark border-secondary h-100 shadow-sm">
+            <div class="card-header border-secondary py-3">
+                <h5 class="mb-0 text-light fw-bold">Your F1 Allegiance</h5>
+            </div>
+            <div class="card-body p-4 d-flex flex-column gap-4 justify-content-center">
+                
+                {% if favorite_driver_data %}
+                    <div class="p-3 rounded border border-secondary bg-transparent d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-secondary small text-uppercase fw-bold">Favorite Driver</div>
+                            <h3 class="text-light fw-bold mb-1 mt-1">{{ favorite_driver_data.name }}</h3>
+                            <span class="text-danger fw-bold">#{{ favorite_driver_data.number }}</span> &nbsp;·&nbsp; <span class="text-secondary small">{{ favorite_driver_data.nationality }}</span>
+                        </div>
+                        <div class="display-4 opacity-25">🏎️</div>
+                    </div>
+                {% else %}
+                    <div class="p-4 rounded border border-secondary border-dashed text-center text-secondary fst-italic">
+                        No favorite driver selected yet.
+                    </div>
+                {% endif %}
+
+                {% if favorite_team_data %}
+                    <div class="p-3 rounded border border-secondary bg-transparent position-relative overflow-hidden">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: {{ favorite_team_data.color }};"></div>
+                        <div class="ps-2">
+                            <div class="text-secondary small text-uppercase fw-bold">Favorite Constructor</div>
+                            <h3 class="text-light fw-bold mb-1 mt-1">{{ favorite_team_data.name }}</h3>
+                            <span class="text-secondary small">Based in {{ favorite_team_data.base }}</span>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="p-4 rounded border border-secondary border-dashed text-center text-secondary fst-italic">
+                        No favorite team selected yet.
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-dashed { border-style: dashed !important; }
+</style>
+{% endblock %}
