@@ -77,17 +77,17 @@ DRIVERS_2026 = [
 DRIVER_MAP = {d['code']: d for d in DRIVERS_2026}
 
 CONSTRUCTORS_2026 = [
-    {'name': 'McLaren',         'base': 'Woking, UK',           'founded': 1966, 'championships': 8,  'color': '#FF8000', 'desc': 'Powered by Mercedes engines. Entering 2026 with a championship-winning pedigree.'},
-    {'name': 'Red Bull Racing', 'base': 'Milton Keynes, UK',    'founded': 2005, 'championships': 6,  'color': '#3671C6', 'desc': 'Entering a new era in 2026 manufacturing their own Red Bull Ford powertrains.'},
-    {'name': 'Ferrari',         'base': 'Maranello, Italy',     'founded': 1950, 'championships': 16, 'color': '#E8002D', 'desc': 'The most storied team in F1 history. Boasts a massive driver lineup of Hamilton and Leclerc.'},
-    {'name': 'Mercedes',        'base': 'Brackley, UK',         'founded': 1954, 'championships': 8,  'color': '#27F4D2', 'desc': 'Eight-time champions looking to dominate the 2026 engine regulations.'},
-    {'name': 'Aston Martin',    'base': 'Silverstone, UK',      'founded': 2021, 'championships': 0,  'color': '#229971', 'desc': 'Now the official Honda works team for 2026. Designed by Adrian Newey.'},
-    {'name': 'Alpine',          'base': 'Enstone, UK',          'founded': 2021, 'championships': 0,  'color': '#FF87B2', 'desc': 'Transitioned from a works team to a customer Mercedes engine model for the 2026 regulations.'},
-    {'name': 'Williams',        'base': 'Grove, UK',            'founded': 1977, 'championships': 7,  'color': '#64C4FF', 'desc': 'One of F1\'s legacy teams. Continues its rebuilding phase with a highly experienced driver pairing.'},
-    {'name': 'Racing Bulls',    'base': 'Faenza, Italy',        'founded': 1985, 'championships': 0,  'color': '#6692FF', 'desc': 'Red Bull\'s sister team. Powered by the new Red Bull Ford powertrains.'},
-    {'name': 'Haas',            'base': 'Kannapolis, USA',      'founded': 2016, 'championships': 0,  'color': '#FFFFFF', 'desc': 'The American squad relying on a close technical partnership with Ferrari.'},
-    {'name': 'Audi',            'base': 'Hinwil, Switzerland',  'founded': 2026, 'championships': 0,  'color': '#F50537', 'desc': 'The German automotive giant officially enters F1 as a works team in 2026.'},
-    {'name': 'Cadillac',        'base': 'Detroit, USA',         'founded': 2026, 'championships': 0,  'color': '#000000', 'desc': 'The 11th team on the grid, backed by General Motors and running Ferrari customer engines.'},
+    {'name': 'McLaren',         'base': 'Woking, UK',           'founded': 1966, 'championships': 8,  'color': '#FF8000', 'color2': '#47C7FC', 'text_color': '#000000', 'desc': 'Powered by Mercedes engines. Entering 2026 with a championship-winning pedigree.'},
+    {'name': 'Red Bull Racing', 'base': 'Milton Keynes, UK',    'founded': 2005, 'championships': 6,  'color': '#3671C6', 'color2': '#F30A2B', 'text_color': '#FFFFFF', 'desc': 'Entering a new era in 2026 manufacturing their own Red Bull Ford powertrains.'},
+    {'name': 'Ferrari',         'base': 'Maranello, Italy',     'founded': 1950, 'championships': 16, 'color': '#E8002D', 'color2': '#FFD700', 'text_color': '#FFFFFF', 'desc': 'The most storied team in F1 history. Boasts a massive driver lineup of Hamilton and Leclerc.'},
+    {'name': 'Mercedes',        'base': 'Brackley, UK',         'founded': 1954, 'championships': 8,  'color': '#27F4D2', 'color2': '#C8CCCE', 'text_color': '#000000', 'desc': 'Eight-time champions looking to dominate the 2026 engine regulations.'},
+    {'name': 'Aston Martin',    'base': 'Silverstone, UK',      'founded': 2021, 'championships': 0,  'color': '#229971', 'color2': '#DEFE02', 'text_color': '#FFFFFF', 'desc': 'Now the official Honda works team for 2026. Designed by Adrian Newey.'},
+    {'name': 'Alpine',          'base': 'Enstone, UK',          'founded': 2021, 'championships': 0,  'color': '#FF87B2', 'color2': '#0050BA', 'text_color': '#000000', 'desc': 'Transitioned from a works team to a customer Mercedes engine model for the 2026 regulations.'},
+    {'name': 'Williams',        'base': 'Grove, UK',            'founded': 1977, 'championships': 7,  'color': '#64C4FF', 'color2': '#041E42', 'text_color': '#000000', 'desc': 'One of F1\'s legacy teams. Continues its rebuilding phase with a highly experienced driver pairing.'},
+    {'name': 'Racing Bulls',    'base': 'Faenza, Italy',        'founded': 1985, 'championships': 0,  'color': '#6692FF', 'color2': '#CC0000', 'text_color': '#FFFFFF', 'desc': 'Red Bull\'s sister team. Powered by the new Red Bull Ford powertrains.'},
+    {'name': 'Haas',            'base': 'Kannapolis, USA',      'founded': 2016, 'championships': 0,  'color': '#FFFFFF', 'color2': '#E60000', 'text_color': '#000000', 'desc': 'The American squad relying on a close technical partnership with Ferrari.'},
+    {'name': 'Audi',            'base': 'Hinwil, Switzerland',  'founded': 2026, 'championships': 0,  'color': '#F50537', 'color2': '#BF0426', 'text_color': '#FFFFFF', 'desc': 'The German automotive giant officially enters F1 as a works team in 2026.'},
+    {'name': 'Cadillac',        'base': 'Detroit, USA',         'founded': 2026, 'championships': 0,  'color': '#D4AF37', 'color2': '#00539B', 'text_color': '#000000', 'desc': 'The 11th team on the grid, backed by General Motors and running Ferrari customer engines.'},
 ]
 
 LEGENDS = [

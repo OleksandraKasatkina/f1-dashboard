@@ -20,7 +20,7 @@ class CustomRegisterForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['favorite_team', 'favorite_driver']
+        fields = ['favorite_team', 'favorite_driver', 'use_team_theme']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,8 +37,13 @@ class UserProfileForm(forms.ModelForm):
         self.fields['favorite_team'] = forms.ChoiceField(choices=team_choices, required=False)
         self.fields['favorite_driver'] = forms.ChoiceField(choices=driver_choices, required=False)
 
-        # Style dropdown elements with Bootstrap classes
-        for field in self.fields.values():
-            field.widget.attrs.update({
-                'class': 'form-select bg-dark text-light border-secondary'
-            })
+        # Style dropdown elements and checkboxes with Bootstrap classes
+        for field_name, field in self.fields.items():
+            if field_name == 'use_team_theme':
+                field.widget.attrs.update({
+                    'class': 'form-check-input'
+                })
+            else:
+                field.widget.attrs.update({
+                    'class': 'form-select bg-dark text-light border-secondary'
+                })

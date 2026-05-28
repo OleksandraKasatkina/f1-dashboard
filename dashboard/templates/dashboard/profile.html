@@ -25,12 +25,24 @@
                 <form method="POST" action="">
                     {% csrf_token %}
                     
-                    {% for field in form %}
-                        <div class="mb-4">
-                            <label class="form-label text-secondary small fw-bold text-uppercase">{{ field.label }}</label>
-                            {{ field }}
-                        </div>
-                    {% endfor %}
+                    <!-- Render drop-downs -->
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold text-uppercase">Favorite Team</label>
+                        {{ form.favorite_team }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold text-uppercase">Favorite Driver</label>
+                        {{ form.favorite_driver }}
+                    </div>
+
+                    <!-- Render custom theme switch toggle -->
+                    <div class="form-check form-switch mb-4 mt-2">
+                        {{ form.use_team_theme }}
+                        <label class="form-check-label text-light small fw-bold text-uppercase ms-2" for="{{ form.use_team_theme.id_for_label }}">
+                            Apply team colors to website design
+                        </label>
+                    </div>
                     
                     <button type="submit" class="btn f1-btn w-100 py-2 mt-2">Save Preferences</button>
                 </form>

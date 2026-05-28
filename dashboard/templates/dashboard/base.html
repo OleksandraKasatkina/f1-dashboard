@@ -10,16 +10,58 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     
     <style>
-        body { background-color: #0f0f14; }
-        .navbar { border-bottom: 3px solid #e10600; background-color: #15151e !important; }
-        .navbar-brand { color: #e10600 !important; font-weight: 700; letter-spacing: 1px; }
+        /* Define global CSS variables based on Django context processor dictionary */
+        :root {
+            --theme-primary: {{ theme.primary }};
+            --theme-secondary: {{ theme.secondary }};
+            --theme-text: {{ theme.text }};
+            --theme-bg: {{ theme.bg_gradient }};
+        }
+
+        body { 
+            background: var(--theme-bg); 
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .navbar { 
+            border-bottom: 3px solid var(--theme-primary); 
+            background-color: #15151e !important; 
+        }
+        
+        .navbar-brand { 
+            color: var(--theme-primary) !important; 
+            font-weight: 700; letter-spacing: 1px; 
+        }
+        
         .nav-link.active { color: #fff !important; font-weight: bold; }
         .dropdown-menu { background-color: #1c1c27; border: 1px solid #2a2a38; }
         .dropdown-item { color: #ccc; }
         .dropdown-item:hover { background-color: #2a2a38; color: #fff; }
-        h1 { color: #e10600; }
-        .f1-btn { background-color: #e10600; color: white; transition: background-color 0.2s; }
-        .f1-btn:hover { background-color: #c40500; color: white; }
+        
+        h1 { color: var(--theme-primary); }
+        
+        /* ── INTERCEPT & OVERRIDE BOOTSTRAP CLASSES ── */
+        .text-danger { color: var(--theme-primary) !important; }
+        .border-danger { border-color: var(--theme-primary) !important; }
+        .bg-danger { background-color: var(--theme-primary) !important; color: var(--theme-text) !important; }
+        .badge.bg-warning { background-color: var(--theme-secondary) !important; color: #fff !important; }
+
+        /* Custom F1 Button adapting to Team Colors */
+        .f1-btn { 
+            background-color: var(--theme-primary); 
+            color: var(--theme-text); 
+            border: 2px solid var(--theme-primary);
+            transition: all 0.2s ease;
+            font-weight: bold;
+        }
+        
+        .f1-btn:hover { 
+            background-color: var(--theme-secondary); 
+            border-color: var(--theme-secondary);
+            color: #fff; /* Ensure text is visible on secondary color */
+            transform: translateY(-2px);
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -77,7 +119,7 @@
             <div class="d-flex align-items-center gap-3">
                 {% if user.is_authenticated %}
                     <span class="text-light small">
-                        Welcome, <a href="{% url 'profile' %}" class="text-danger fw-bold text-decoration-none transition-hover">{{ user.username }}</a>!
+                        Welcome, <a href="{% url 'profile' %}" class="fw-bold text-decoration-none transition-hover" style="color: var(--theme-primary);">{{ user.username }}</a>!
                     </span>
                     <form method="POST" action="{% url 'logout' %}" class="m-0">
                         {% csrf_token %}
