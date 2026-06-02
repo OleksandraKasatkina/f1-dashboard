@@ -6,11 +6,9 @@
     <title>{% block title %}F1 Dashboard{% endblock %}</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- HTMX for dynamic interactions without page reloads -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     
     <style>
-        /* Define global CSS variables based on Django context processor dictionary */
         :root {
             --theme-primary: {{ theme.primary }};
             --theme-secondary: {{ theme.secondary }};
@@ -22,6 +20,12 @@
             background: var(--theme-bg); 
             background-attachment: fixed;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
         }
         
         .navbar { 
@@ -29,25 +33,18 @@
             background-color: #15151e !important; 
         }
         
-        .navbar-brand { 
-            color: var(--theme-primary) !important; 
-            font-weight: 700; letter-spacing: 1px; 
-        }
-        
+        .navbar-brand { color: var(--theme-primary) !important; font-weight: 700; letter-spacing: 1px; }
         .nav-link.active { color: #fff !important; font-weight: bold; }
         .dropdown-menu { background-color: #1c1c27; border: 1px solid #2a2a38; }
         .dropdown-item { color: #ccc; }
         .dropdown-item:hover { background-color: #2a2a38; color: #fff; }
-        
         h1 { color: var(--theme-primary); }
         
-        /* ── INTERCEPT & OVERRIDE BOOTSTRAP CLASSES ── */
         .text-danger { color: var(--theme-primary) !important; }
         .border-danger { border-color: var(--theme-primary) !important; }
         .bg-danger { background-color: var(--theme-primary) !important; color: var(--theme-text) !important; }
         .badge.bg-warning { background-color: var(--theme-secondary) !important; color: #fff !important; }
 
-        /* Custom F1 Button adapting to Team Colors */
         .f1-btn { 
             background-color: var(--theme-primary); 
             color: var(--theme-text); 
@@ -59,13 +56,37 @@
         .f1-btn:hover { 
             background-color: var(--theme-secondary); 
             border-color: var(--theme-secondary);
-            color: #fff; /* Ensure text is visible on secondary color */
+            color: #fff;
             transform: translateY(-2px);
+        }
+
+        .driver-watermark {
+            position: fixed;
+            bottom: -5vh;
+            right: -2vw;
+            font-size: 45vw;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--theme-primary);
+            opacity: 0.04;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            line-height: 0.8;
+        }
+        
+        .f1-footer {
+            background-color: #0f0f14;
+            border-top: 1px solid #2a2a38;
         }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+
+{% if theme.watermark %}
+    <div class="driver-watermark">{{ theme.watermark }}</div>
+{% endif %}
 
 <nav class="navbar navbar-expand-lg navbar-dark mb-4 py-3">
     <div class="container">
@@ -76,11 +97,8 @@
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto gap-2">
-                <!-- Live Analytics Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        📊 Live Analytics
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">📊 Live Analytics</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'schedule' %}">Season Schedule</a></li>
                         <li><a class="dropdown-item" href="{% url 'standings' %}">Championship Standings</a></li>
@@ -89,24 +107,16 @@
                         <li><a class="dropdown-item" href="{% url 'compare' %}">Lap Time Comparison</a></li>
                     </ul>
                 </li>
-
-                <!-- Encyclopedia Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        📘 Encyclopedia
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">📘 Encyclopedia</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'drivers' %}">Driver Profiles</a></li>
                         <li><a class="dropdown-item" href="{% url 'constructors' %}">Constructors Info</a></li>
                         <li><a class="dropdown-item" href="{% url 'history' %}">History & Legends</a></li>
                     </ul>
                 </li>
-
-                <!-- F1 Zone Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        🎮 F1 Zone
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">🎮 F1 Zone</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'quiz' %}">Trivia Quiz</a></li>
                         <li><a class="dropdown-item disabled text-secondary" href="#">AI Predictor (Coming Soon)</a></li>
@@ -114,8 +124,6 @@
                     </ul>
                 </li>
             </ul>
-            
-            <!-- Dynamic User Authentication Section -->
             <div class="d-flex align-items-center gap-3">
                 {% if user.is_authenticated %}
                     <span class="text-light small">
@@ -134,9 +142,22 @@
     </div>
 </nav>
 
-<div class="container mb-5">
+<div class="container main-content mb-5">
     {% block content %}{% endblock %}
 </div>
+
+<!-- Dynamic Educational Footer -->
+<footer class="f1-footer py-4 mt-auto">
+    <div class="container text-center">
+        {% if theme.quote %}
+            <p class="fst-italic text-light opacity-75 fs-5 mb-3">"{{ theme.quote }}"</p>
+        {% endif %}
+        <p class="text-secondary small mb-0">
+            &copy; 2026 F1 Dashboard Engine. <br>
+            <span class="opacity-75">This is an educational project created by Oleksandra Kasatkina. Not affiliated with Formula 1 or the FIA.</span>
+        </p>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% block extra_js %}{% endblock %}

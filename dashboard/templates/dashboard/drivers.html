@@ -1,4 +1,5 @@
 {% extends "dashboard/base.html" %}
+{% load static %}
 {% block title %}F1 Driver Profiles{% endblock %}
 
 {% block content %}
@@ -24,24 +25,44 @@
 <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for d in drivers %}
     <div class="col">
-        <div class="card h-100 bg-dark border-secondary">
-            <div class="card-body">
-                <div class="display-6 fw-bold text-danger opacity-50 mb-2">#{{ d.number }}</div>
-                <h4 class="card-title text-light mb-1">
-                    {{ d.name }}
-                    {% if d.championships > 0 %}
-                    <span class="badge bg-warning text-dark ms-2 fs-6">{{ d.championships }}× WDC</span>
-                    {% endif %}
-                </h4>
-                <h6 class="card-subtitle text-secondary mb-3">{{ d.team }}</h6>
-                
-                <div class="d-flex gap-3 flex-wrap mb-3 small text-secondary">
-                    <span>{{ d.nationality }}</span>
-                    <span>Born: <strong class="text-light">{{ d.dob }}</strong></span>
-                    <span>Code: <strong class="text-light">{{ d.code }}</strong></span>
+        <div class="card h-100 bg-dark border-secondary overflow-hidden shadow-sm">
+            <div class="row g-0 h-100">
+                <!-- Driver Photo Column -->
+                <div class="col-4 bg-secondary bg-opacity-10 d-flex align-items-end justify-content-center border-end border-secondary" style="min-height: 200px;">
+                    <!-- Fallback to a placeholder if the specific webp image doesn't exist yet -->
+                    <img src="{% static 'images/drivers/'|add:d.code|add:'.webp' %}" 
+                         alt="{{ d.name }}" 
+                         class="img-fluid"
+                         style="max-height: 100%; object-fit: cover; object-position: bottom;"
+                         onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';">
                 </div>
                 
-                <p class="card-text text-light opacity-75 small">{{ d.bio }}</p>
+                <!-- Driver Info Column -->
+                <div class="col-8">
+                    <div class="card-body position-relative d-flex flex-column h-100">
+                        <div class="position-absolute top-0 end-0 p-3 display-6 fw-bold opacity-25" style="color: {{ d.accent|default:'#e10600' }};">#{{ d.number }}</div>
+                        
+                        <h4 class="card-title text-light mb-1 mt-2">
+                            {{ d.name }}
+                        </h4>
+                        <h6 class="card-subtitle text-secondary mb-3">{{ d.team }}</h6>
+                        
+                        <div class="d-flex gap-2 flex-wrap mb-3 small text-secondary">
+                            <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary">{{ d.nationality }}</span>
+                            <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary">{{ d.code }}</span>
+                            {% if d.championships > 0 %}
+                                <span class="badge bg-warning text-dark">{{ d.championships }}× WDC</span>
+                            {% endif %}
+                        </div>
+                        
+                        <p class="card-text text-light opacity-75 small mb-3">{{ d.bio }}</p>
+                        
+                        <!-- Driver Quote Block -->
+                        <div class="mt-auto pt-2 border-top border-secondary border-opacity-50">
+                            <span class="fst-italic text-secondary small">"{{ d.quote }}"</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

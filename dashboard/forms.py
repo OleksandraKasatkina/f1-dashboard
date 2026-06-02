@@ -20,30 +20,24 @@ class CustomRegisterForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['favorite_team', 'favorite_driver', 'use_team_theme']
+        fields = ['favorite_team', 'favorite_driver', 'theme_mode', 'custom_primary', 'custom_secondary', 'custom_text', 'show_watermark']
+        widgets = {
+            'custom_primary': forms.TextInput(attrs={'type': 'color', 'class': 'form-control form-control-color bg-dark border-secondary w-100 p-1'}),
+            'custom_secondary': forms.TextInput(attrs={'type': 'color', 'class': 'form-control form-control-color bg-dark border-secondary w-100 p-1'}),
+            'custom_text': forms.TextInput(attrs={'type': 'color', 'class': 'form-control form-control-color bg-dark border-secondary w-100 p-1'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        # Dynamically generate choice lists from data.py configuration
-        team_choices = [('', '— Select Favorite Team —')] + [
-            (t['name'], t['name']) for t in data.CONSTRUCTORS_2026
-        ]
-        driver_choices = [('', '— Select Favorite Driver —')] + [
-            (d['code'], f"{d['name']} ({d['code']})") for d in data.DRIVERS_2026
-        ]
+        team_choices = [('', '— Select Favorite Team —')] + [(t['name'], t['name']) for t in data.CONSTRUCTORS_2026]
+        driver_choices = [('', '— Select Favorite Driver —')] + [(d['code'], f"{d['name']} ({d['code']})") for d in data.DRIVERS_2026]
 
-        # Override default fields with styled choice fields
         self.fields['favorite_team'] = forms.ChoiceField(choices=team_choices, required=False)
         self.fields['favorite_driver'] = forms.ChoiceField(choices=driver_choices, required=False)
 
-        # Style dropdown elements and checkboxes with Bootstrap classes
         for field_name, field in self.fields.items():
-            if field_name == 'use_team_theme':
-                field.widget.attrs.update({
-                    'class': 'form-check-input'
-                })
-            else:
-                field.widget.attrs.update({
-                    'class': 'form-select bg-dark text-light border-secondary'
-                })
+            if field_name in ['use_team_theme', 'show_watermark']:
+                field.widget.attrs.update({'class': 'form-check-input'})
+            elif field_name not in ['custom_primary', 'custom_secondary', 'custom_text']:
+                field.widget.attrs.update({'class': 'form-select bg-dark text-light border-secondary'})

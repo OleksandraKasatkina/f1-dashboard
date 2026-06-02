@@ -1,98 +1,98 @@
 {% extends "dashboard/base.html" %}
-{% block title %}My Profile{% endblock %}
+{% block title %}Profile & Theme Studio{% endblock %}
 
 {% block content %}
-<div class="row g-4">
+<div class="row mb-4">
     <div class="col-12">
         <h1 class="display-5 fw-bold mb-1">Personal Dashboard</h1>
-        <p class="text-secondary">Customize your Formula 1 preferences and fan profile.</p>
+        <p class="text-secondary">Customize your F1 allegiance and design your personal Theme Studio.</p>
     </div>
+</div>
 
-    <div class="col-lg-5">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-success border-success bg-transparent text-success mb-4 text-center" role="alert">
-                    ✅ {{ message }}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success border-success bg-transparent text-success mb-4 text-center" role="alert">
+            ✅ {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="row g-4">
+        
+        <div class="col-lg-6">
+            <div class="card bg-dark border-secondary h-100 shadow-sm">
+                <div class="card-header border-secondary py-3">
+                    <h5 class="mb-0 text-light fw-bold">🏎️ F1 Allegiance</h5>
                 </div>
-            {% endfor %}
-        {% endif %}
-
-        <div class="card bg-dark border-secondary shadow-sm">
-            <div class="card-header border-secondary py-3">
-                <h5 class="mb-0 text-light fw-bold">Fan Preferences</h5>
-            </div>
-            <div class="card-body p-4">
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    
-                    <!-- Render drop-downs -->
+                <div class="card-body p-4">
                     <div class="mb-4">
                         <label class="form-label text-secondary small fw-bold text-uppercase">Favorite Team</label>
                         {{ form.favorite_team }}
                     </div>
-                    
                     <div class="mb-4">
                         <label class="form-label text-secondary small fw-bold text-uppercase">Favorite Driver</label>
                         {{ form.favorite_driver }}
                     </div>
+                    
+                    {% if favorite_driver_data %}
+                    <div class="mt-4 p-3 rounded border border-secondary bg-transparent position-relative overflow-hidden">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: var(--theme-primary);"></div>
+                        <div class="ps-3">
+                            <div class="text-secondary small text-uppercase fw-bold mb-1">Active Driver Status</div>
+                            <h4 class="text-light fw-bold mb-1">{{ favorite_driver_data.name }} <span class="text-danger">#{{ favorite_driver_data.number }}</span></h4>
+                            <p class="fst-italic text-secondary small mb-0 mt-2">"{{ favorite_driver_data.quote }}"</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
-                    <!-- Render custom theme switch toggle -->
-                    <div class="form-check form-switch mb-4 mt-2">
-                        {{ form.use_team_theme }}
-                        <label class="form-check-label text-light small fw-bold text-uppercase ms-2" for="{{ form.use_team_theme.id_for_label }}">
-                            Apply team colors to website design
+        <div class="col-lg-6">
+            <div class="card bg-dark border-secondary h-100 shadow-sm border-start border-3" style="border-left-color: var(--theme-primary) !important;">
+                <div class="card-header border-secondary py-3">
+                    <h5 class="mb-0 text-light fw-bold">🎨 Theme Studio</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold text-uppercase">Website Theme Mode</label>
+                        {{ form.theme_mode }}
+                    </div>
+
+                    <div class="form-check form-switch mb-4">
+                        {{ form.show_watermark }}
+                        <label class="form-check-label text-light small fw-bold text-uppercase ms-2" for="{{ form.show_watermark.id_for_label }}">
+                            Display driver number in background
                         </label>
                     </div>
-                    
-                    <button type="submit" class="btn f1-btn w-100 py-2 mt-2">Save Preferences</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-7">
-        <div class="card bg-dark border-secondary h-100 shadow-sm">
-            <div class="card-header border-secondary py-3">
-                <h5 class="mb-0 text-light fw-bold">Your F1 Allegiance</h5>
-            </div>
-            <div class="card-body p-4 d-flex flex-column gap-4 justify-content-center">
-                
-                {% if favorite_driver_data %}
-                    <div class="p-3 rounded border border-secondary bg-transparent d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="text-secondary small text-uppercase fw-bold">Favorite Driver</div>
-                            <h3 class="text-light fw-bold mb-1 mt-1">{{ favorite_driver_data.name }}</h3>
-                            <span class="text-danger fw-bold">#{{ favorite_driver_data.number }}</span> &nbsp;·&nbsp; <span class="text-secondary small">{{ favorite_driver_data.nationality }}</span>
-                        </div>
-                        <div class="display-4 opacity-25">🏎️</div>
-                    </div>
-                {% else %}
-                    <div class="p-4 rounded border border-secondary border-dashed text-center text-secondary fst-italic">
-                        No favorite driver selected yet.
-                    </div>
-                {% endif %}
-
-                {% if favorite_team_data %}
-                    <div class="p-3 rounded border border-secondary bg-transparent position-relative overflow-hidden">
-                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: {{ favorite_team_data.color }};"></div>
-                        <div class="ps-2">
-                            <div class="text-secondary small text-uppercase fw-bold">Favorite Constructor</div>
-                            <h3 class="text-light fw-bold mb-1 mt-1">{{ favorite_team_data.name }}</h3>
-                            <span class="text-secondary small">Based in {{ favorite_team_data.base }}</span>
+                    <div class="p-3 border border-secondary rounded bg-transparent">
+                        <label class="form-label text-secondary small fw-bold text-uppercase mb-3">Custom Colors (Active only in "Custom" mode)</label>
+                        <div class="row g-3">
+                            <div class="col-4 text-center">
+                                {{ form.custom_primary }}
+                                <div class="small text-secondary mt-1">Primary</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                {{ form.custom_secondary }}
+                                <div class="small text-secondary mt-1">Secondary</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                {{ form.custom_text }}
+                                <div class="small text-secondary mt-1">Text</div>
+                            </div>
                         </div>
                     </div>
-                {% else %}
-                    <div class="p-4 rounded border border-secondary border-dashed text-center text-secondary fst-italic">
-                        No favorite team selected yet.
-                    </div>
-                {% endif %}
-
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<style>
-    .border-dashed { border-style: dashed !important; }
-</style>
+        <div class="col-12 mt-4">
+            <button type="submit" class="btn f1-btn btn-lg w-100 py-3 fw-bold">Apply Changes & Save Profile</button>
+        </div>
+
+    </div>
+</form>
 {% endblock %}
