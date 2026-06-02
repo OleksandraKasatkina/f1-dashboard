@@ -3,12 +3,16 @@
 
 {% block content %}
 <div class="mb-4">
-    <a href="{% url 'schedule' %}" class="btn btn-outline-secondary btn-sm">← Back to Schedule</a>
+    <a href="{% url 'schedule' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Schedule
+    </a>
 </div>
 
 <div class="row mb-4">
     <div class="col-12">
-        <h1 class="display-5 fw-bold mb-0">{{ location }}</h1>
+        <h1 class="display-5 fw-bold mb-0">
+            <i class="bi bi-geo-alt-fill text-danger me-2"></i>{{ location }}
+        </h1>
         <p class="lead text-secondary">{{ info.country }} &nbsp;·&nbsp; {{ info.city }}</p>
     </div>
 </div>
@@ -16,25 +20,33 @@
 <div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
     <div class="col">
         <div class="card bg-dark border-secondary h-100 text-center py-3">
-            <div class="text-secondary small text-uppercase fw-bold mb-1">Circuit Length</div>
+            <div class="text-secondary small text-uppercase fw-bold mb-1">
+                <i class="bi bi-ruler me-1"></i> Circuit Length
+            </div>
             <div class="fs-4 fw-bold text-light">{{ info.length_km }} km</div>
         </div>
     </div>
     <div class="col">
         <div class="card bg-dark border-secondary h-100 text-center py-3">
-            <div class="text-secondary small text-uppercase fw-bold mb-1">Number of Turns</div>
+            <div class="text-secondary small text-uppercase fw-bold mb-1">
+                <i class="bi bi-arrow-repeat me-1"></i> Number of Turns
+            </div>
             <div class="fs-4 fw-bold text-light">{{ info.turns }}</div>
         </div>
     </div>
     <div class="col">
         <div class="card bg-dark border-secondary h-100 text-center py-3">
-            <div class="text-secondary small text-uppercase fw-bold mb-1">First Grand Prix</div>
+            <div class="text-secondary small text-uppercase fw-bold mb-1">
+                <i class="bi bi-calendar-event me-1"></i> First Grand Prix
+            </div>
             <div class="fs-4 fw-bold text-light">{{ info.first_gp }}</div>
         </div>
     </div>
     <div class="col">
         <div class="card bg-dark border-secondary h-100 text-center py-3">
-            <div class="text-secondary small text-uppercase fw-bold mb-1">Lap Record</div>
+            <div class="text-secondary small text-uppercase fw-bold mb-1">
+                <i class="bi bi-stopwatch me-1"></i> Lap Record
+            </div>
             <div class="fs-6 fw-bold text-light mt-2">{{ info.lap_record }}</div>
         </div>
     </div>
@@ -47,6 +59,6 @@
 </div>
 
 <a href="{{ wiki_url }}" target="_blank" rel="noopener" class="btn f1-btn">
-    Read more on Wikipedia ↗
+    Read more on Wikipedia <i class="bi bi-box-arrow-up-right ms-1"></i>
 </a>
 {% endblock %}

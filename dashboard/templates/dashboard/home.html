@@ -9,12 +9,14 @@
     </p>
 </div>
 
-<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">📊 Live Analytics</h3>
+<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">
+    <i class="bi bi-bar-chart-fill me-2 text-danger"></i> Live Analytics
+</h3>
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
     <div class="col">
         <a href="{% url 'schedule' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">📅</div>
+                <div class="display-4 mb-3"><i class="bi bi-calendar-week text-light opacity-75"></i></div>
                 <h5 class="card-title text-danger fw-bold">Schedule</h5>
                 <p class="card-text text-secondary small">Browse the full calendar from 2018 to today.</p>
             </div>
@@ -23,7 +25,7 @@
     <div class="col">
         <a href="{% url 'standings' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">🏆</div>
+                <div class="display-4 mb-3"><i class="bi bi-trophy text-light opacity-75"></i></div>
                 <h5 class="card-title text-danger fw-bold">Standings</h5>
                 <p class="card-text text-secondary small">Current drivers' and constructors' points.</p>
             </div>
@@ -32,7 +34,7 @@
     <div class="col">
         <a href="{% url 'results' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">🏁</div>
+                <div class="display-4 mb-3"><i class="bi bi-flag text-light opacity-75"></i></div>
                 <h5 class="card-title text-danger fw-bold">Results</h5>
                 <p class="card-text text-secondary small">Full results from recent races and qualifying.</p>
             </div>
@@ -41,7 +43,7 @@
     <div class="col">
         <a href="{% url 'compare' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm border-danger border-bottom border-3">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">📈</div>
+                <div class="display-4 mb-3"><i class="bi bi-stopwatch text-light opacity-75"></i></div>
                 <h5 class="card-title text-danger fw-bold">Lap Compare</h5>
                 <p class="card-text text-secondary small">Interactive telemetry and lap time comparison.</p>
             </div>
@@ -49,12 +51,14 @@
     </div>
 </div>
 
-<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">📘 F1 Encyclopedia</h3>
+<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">
+    <i class="bi bi-book me-2 text-danger"></i> F1 Encyclopedia
+</h3>
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
     <div class="col">
         <a href="{% url 'drivers' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body p-4 d-flex align-items-center gap-3">
-                <div class="display-5">🧑‍✈️</div>
+                <div class="display-5"><i class="bi bi-person-vcard text-light opacity-75"></i></div>
                 <div>
                     <h5 class="card-title text-danger fw-bold mb-1">Driver Profiles</h5>
                     <p class="card-text text-secondary small mb-0">Stats, bios, and career highlights.</p>
@@ -65,7 +69,7 @@
     <div class="col">
         <a href="{% url 'constructors' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body p-4 d-flex align-items-center gap-3">
-                <div class="display-5">🔧</div>
+                <div class="display-5"><i class="bi bi-tools text-light opacity-75"></i></div>
                 <div>
                     <h5 class="card-title text-danger fw-bold mb-1">Constructors</h5>
                     <p class="card-text text-secondary small mb-0">Team histories and liveries.</p>
@@ -76,7 +80,7 @@
     <div class="col">
         <a href="{% url 'history' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body p-4 d-flex align-items-center gap-3">
-                <div class="display-5">📖</div>
+                <div class="display-5"><i class="bi bi-clock-history text-light opacity-75"></i></div>
                 <div>
                     <h5 class="card-title text-danger fw-bold mb-1">History & Legends</h5>
                     <p class="card-text text-secondary small mb-0">Greatest eras and full glossary.</p>
@@ -86,12 +90,14 @@
     </div>
 </div>
 
-<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">🎮 F1 Zone</h3>
+<h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">
+    <i class="bi bi-controller me-2 text-danger"></i> F1 Zone
+</h3>
 <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col">
         <a href="{% url 'quiz' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">❓</div>
+                <div class="display-4 mb-3"><i class="bi bi-question-circle text-light opacity-75"></i></div>
                 <h5 class="card-title text-danger fw-bold">Trivia Quiz</h5>
                 <p class="card-text text-secondary small">Test your knowledge with 5 random questions.</p>
             </div>
@@ -101,7 +107,7 @@
     <div class="col">
         <div class="card h-100 bg-dark border-secondary text-light opacity-50 shadow-sm" style="border-style: dashed !important;">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">🔮</div>
+                <div class="display-4 mb-3"><i class="bi bi-robot text-secondary opacity-75"></i></div>
                 <h5 class="card-title text-secondary fw-bold">AI Predictor</h5>
                 <p class="card-text text-secondary small">Machine Learning race predictions.</p>
                 <span class="badge bg-secondary mt-2">Under Construction</span>
@@ -111,7 +117,7 @@
     <div class="col">
         <div class="card h-100 bg-dark border-secondary text-light opacity-50 shadow-sm" style="border-style: dashed !important;">
             <div class="card-body text-center py-4">
-                <div class="display-4 mb-3">🏆</div>
+                <div class="display-4 mb-3"><i class="bi bi-award text-secondary opacity-75"></i></div>
                 <h5 class="card-title text-secondary fw-bold">Fantasy League</h5>
                 <p class="card-text text-secondary small">Compete with friends on race weekends.</p>
                 <span class="badge bg-secondary mt-2">Requires Login</span>
@@ -122,6 +128,6 @@
 
 <style>
     .transition-hover { transition: transform 0.2s ease, border-color 0.2s ease; }
-    .transition-hover:hover { transform: translateY(-5px); border-color: #e10600 !important; }
+    .transition-hover:hover { transform: translateY(-5px); border-color: var(--theme-primary) !important; }
 </style>
 {% endblock %}

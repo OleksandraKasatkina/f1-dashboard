@@ -4,7 +4,9 @@
 {% block content %}
 <div class="row mb-4">
     <div class="col-12">
-        <h1 class="display-5 fw-bold mb-1">Personal Dashboard</h1>
+        <h1 class="display-5 fw-bold mb-1">
+            <i class="bi bi-person-gear text-danger me-2"></i>Personal Dashboard
+        </h1>
         <p class="text-secondary">Customize your F1 allegiance and design your personal Theme Studio.</p>
     </div>
 </div>
@@ -12,7 +14,7 @@
 {% if messages %}
     {% for message in messages %}
         <div class="alert alert-success border-success bg-transparent text-success mb-4 text-center" role="alert">
-            ✅ {{ message }}
+            <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
         </div>
     {% endfor %}
 {% endif %}
@@ -24,7 +26,9 @@
         <div class="col-lg-6">
             <div class="card bg-dark border-secondary h-100 shadow-sm">
                 <div class="card-header border-secondary py-3">
-                    <h5 class="mb-0 text-light fw-bold">🏎️ F1 Allegiance</h5>
+                    <h5 class="mb-0 text-light fw-bold">
+                        <i class="bi bi-flag-fill text-danger me-2"></i>F1 Allegiance
+                    </h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="mb-4">
@@ -53,7 +57,9 @@
         <div class="col-lg-6">
             <div class="card bg-dark border-secondary h-100 shadow-sm border-start border-3" style="border-left-color: var(--theme-primary) !important;">
                 <div class="card-header border-secondary py-3">
-                    <h5 class="mb-0 text-light fw-bold">🎨 Theme Studio</h5>
+                    <h5 class="mb-0 text-light fw-bold">
+                        <i class="bi bi-palette-fill text-danger me-2"></i>Theme Studio
+                    </h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="mb-4">
@@ -90,7 +96,9 @@
         </div>
 
         <div class="col-12 mt-4">
-            <button type="submit" class="btn f1-btn btn-lg w-100 py-3 fw-bold">Apply Changes & Save Profile</button>
+            <button type="submit" class="btn f1-btn btn-lg w-100 py-3 fw-bold">
+                <i class="bi bi-save me-2"></i>Apply Changes & Save Profile
+            </button>
         </div>
 
     </div>

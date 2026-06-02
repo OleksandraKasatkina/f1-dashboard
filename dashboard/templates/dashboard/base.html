@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}F1 Dashboard{% endblock %}</title>
     
+    <!-- Core Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     
     <style>
@@ -98,7 +104,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto gap-2">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">📊 Live Analytics</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bar-chart-fill me-1"></i> Live Analytics
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'schedule' %}">Season Schedule</a></li>
                         <li><a class="dropdown-item" href="{% url 'standings' %}">Championship Standings</a></li>
@@ -107,16 +115,22 @@
                         <li><a class="dropdown-item" href="{% url 'compare' %}">Lap Time Comparison</a></li>
                     </ul>
                 </li>
+                
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">📘 Encyclopedia</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-book me-1"></i> Encyclopedia
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'drivers' %}">Driver Profiles</a></li>
                         <li><a class="dropdown-item" href="{% url 'constructors' %}">Constructors Info</a></li>
                         <li><a class="dropdown-item" href="{% url 'history' %}">History & Legends</a></li>
                     </ul>
                 </li>
+                
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">🎮 F1 Zone</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-controller me-1"></i> F1 Zone
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'quiz' %}">Trivia Quiz</a></li>
                         <li><a class="dropdown-item disabled text-secondary" href="#">AI Predictor (Coming Soon)</a></li>

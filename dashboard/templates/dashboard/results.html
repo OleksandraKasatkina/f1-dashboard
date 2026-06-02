@@ -4,7 +4,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
     <div>
-        <h1>Race Results</h1>
+        <h1><i class="bi bi-flag-fill text-danger me-2"></i>Race Results</h1>
         {% if event_name %}<p class="text-secondary mb-0 fs-5">{{ event_name }}</p>{% endif %}
     </div>
     <form method="GET" action="" class="d-flex align-items-center gap-2">
@@ -22,10 +22,14 @@
 {% else %}
 <ul class="nav nav-pills mb-4" id="results-tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="race-tab" data-bs-toggle="pill" data-bs-target="#race" type="button" role="tab">🏁 Race</button>
+        <button class="nav-link active" id="race-tab" data-bs-toggle="pill" data-bs-target="#race" type="button" role="tab">
+            <i class="bi bi-flag-fill me-1"></i> Race
+        </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="quali-tab" data-bs-toggle="pill" data-bs-target="#quali" type="button" role="tab">⏱️ Qualifying</button>
+        <button class="nav-link" id="quali-tab" data-bs-toggle="pill" data-bs-target="#quali" type="button" role="tab">
+            <i class="bi bi-stopwatch-fill me-1"></i> Qualifying
+        </button>
     </li>
 </ul>
 
@@ -47,7 +51,7 @@
                         <td>{{ r.team }}</td>
                         <td>{{ r.points }}</td>
                         <td>
-                            {% if r.status == 'Finished' %}<span class="badge bg-success">✓ Finished</span>
+                            {% if r.status == 'Finished' %}<span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Finished</span>
                             {% else %}<span class="badge bg-secondary">{{ r.status }}</span>{% endif %}
                         </td>
                     </tr>

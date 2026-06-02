@@ -5,7 +5,9 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold">F1 Trivia Quiz 🏎️</h1>
+            <h1 class="display-5 fw-bold">
+                <i class="bi bi-controller text-danger me-3"></i>F1 Trivia Quiz
+            </h1>
             <p class="text-secondary">5 randomly chosen questions. How well do you know Formula 1?</p>
         </div>
 
@@ -36,7 +38,9 @@
             {% endfor %}
 
             <div class="text-center mt-5 mb-5">
-                <button type="submit" class="btn f1-btn btn-lg px-5">Submit Answers →</button>
+                <button type="submit" class="btn f1-btn btn-lg px-5">
+                    Submit Answers <i class="bi bi-arrow-right ms-2"></i>
+                </button>
             </div>
         </form>
     </div>
@@ -44,6 +48,6 @@
 
 <style>
     /* Add slight hover effect to radio buttons */
-    .form-check-label:hover { background-color: #2a2a38; border-color: #e10600 !important; }
+    .form-check-label:hover { background-color: #2a2a38; border-color: var(--theme-primary) !important; }
 </style>
 {% endblock %}

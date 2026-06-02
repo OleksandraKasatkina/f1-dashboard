@@ -2,17 +2,23 @@
 {% block title %}F1 History & Legends{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">F1 History, Legends & Glossary</h1>
+<h1 class="mb-4"><i class="bi bi-clock-history text-danger me-2"></i>F1 History, Legends & Glossary</h1>
 
 <ul class="nav nav-pills mb-4" id="history-tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="eras-tab" data-bs-toggle="pill" data-bs-target="#eras" type="button" role="tab">🕰️ History of F1</button>
+        <button class="nav-link active" id="eras-tab" data-bs-toggle="pill" data-bs-target="#eras" type="button" role="tab">
+            <i class="bi bi-hourglass-split me-1"></i> History of F1
+        </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="legends-tab" data-bs-toggle="pill" data-bs-target="#legends" type="button" role="tab">⭐ Legendary Drivers</button>
+        <button class="nav-link" id="legends-tab" data-bs-toggle="pill" data-bs-target="#legends" type="button" role="tab">
+            <i class="bi bi-star-fill me-1 text-warning"></i> Legendary Drivers
+        </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="glossary-tab" data-bs-toggle="pill" data-bs-target="#glossary" type="button" role="tab">📖 Glossary</button>
+        <button class="nav-link" id="glossary-tab" data-bs-toggle="pill" data-bs-target="#glossary" type="button" role="tab">
+            <i class="bi bi-book me-1"></i> Glossary
+        </button>
     </li>
 </ul>
 
@@ -41,7 +47,9 @@
                     <div class="card-body">
                         <h4 class="card-title text-light mb-1">
                             {{ l.name }}
-                            <span class="badge bg-warning text-dark fs-6 ms-2">{{ l.championships }}× WDC</span>
+                            <span class="badge bg-warning text-dark fs-6 ms-2">
+                                <i class="bi bi-trophy-fill me-1"></i>{{ l.championships }} WDC
+                            </span>
                         </h4>
                         <div class="text-secondary small mb-3">
                             {{ l.nationality }} &nbsp;|&nbsp; {{ l.wins }} wins &nbsp;|&nbsp; {{ l.years }}
