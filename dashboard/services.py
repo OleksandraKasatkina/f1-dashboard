@@ -154,3 +154,23 @@ def fetch_lap_comparison(year, round_num, driver1, driver2):
         return json.dumps([d1, d2]), None
     except Exception as exc:
         return None, f"Could not load lap data: {exc}"
+
+def get_next_race():
+    """Finds the next upcoming race for the countdown timer."""
+    try:
+        year = date.today().year
+        schedule = fastf1.get_event_schedule(year)
+        races = schedule[schedule['EventFormat'] != 'testing']
+        
+        for _, row in races.iterrows():
+            # Check if the race date is today or in the future
+            if row['EventDate'].date() >= date.today():
+                return {
+                    'name': row['EventName'],
+                    'round': row['RoundNumber'],
+                    'location': row['Location'],
+                    'timestamp': row['EventDate'].isoformat() # Convert for JS parsing
+                }
+    except Exception:
+        pass
+    return None

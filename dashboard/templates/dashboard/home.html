@@ -2,12 +2,48 @@
 {% block title %}F1 Dashboard{% endblock %}
 
 {% block content %}
-<div class="text-center py-5 mb-5">
+<div class="text-center py-5 mb-4">
     <h1 class="display-3 fw-bold mb-3">Formula 1 Command Center</h1>
     <p class="lead text-secondary max-w-75 mx-auto">
         Your ultimate hub for real-time analytics, historical data, and interactive F1 features.
     </p>
 </div>
+
+{% if next_race %}
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+        <div class="card bg-dark border-danger shadow-lg" style="border-width: 2px !important; border-color: var(--theme-primary) !important;">
+            <div class="card-body text-center p-4 p-md-5">
+                <div class="badge bg-danger text-light mb-3 fs-6 px-3 py-2 text-uppercase tracking-wider">Next Race</div>
+                <h2 class="text-light fw-bold mb-1">Round {{ next_race.round }} &nbsp;·&nbsp; {{ next_race.name }}</h2>
+                <p class="text-secondary mb-4"><i class="bi bi-geo-alt-fill me-1 text-danger"></i>{{ next_race.location }}</p>
+                
+                <div class="d-flex justify-content-center gap-3 gap-md-4" id="countdown-timer">
+                    <div class="text-center">
+                        <div class="display-4 fw-bold text-light" id="cd-days">00</div>
+                        <div class="text-secondary small text-uppercase">Days</div>
+                    </div>
+                    <div class="display-4 fw-bold text-secondary opacity-50">:</div>
+                    <div class="text-center">
+                        <div class="display-4 fw-bold text-light" id="cd-hours">00</div>
+                        <div class="text-secondary small text-uppercase">Hours</div>
+                    </div>
+                    <div class="display-4 fw-bold text-secondary opacity-50">:</div>
+                    <div class="text-center">
+                        <div class="display-4 fw-bold text-light" id="cd-mins">00</div>
+                        <div class="text-secondary small text-uppercase">Mins</div>
+                    </div>
+                    <div class="display-4 fw-bold text-secondary opacity-50 d-none d-sm-block">:</div>
+                    <div class="text-center d-none d-sm-block">
+                        <div class="display-4 fw-bold text-danger" id="cd-secs">00</div>
+                        <div class="text-secondary small text-uppercase">Secs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">
     <i class="bi bi-bar-chart-fill me-2 text-danger"></i> Live Analytics
@@ -93,7 +129,7 @@
 <h3 class="border-bottom border-secondary pb-2 mb-4 text-light mt-5">
     <i class="bi bi-controller me-2 text-danger"></i> F1 Zone
 </h3>
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-2 justify-content-center g-4">
     <div class="col">
         <a href="{% url 'quiz' %}" class="card h-100 bg-dark border-secondary text-decoration-none text-light transition-hover shadow-sm">
             <div class="card-body text-center py-4">
@@ -102,17 +138,6 @@
                 <p class="card-text text-secondary small">Test your knowledge with 5 random questions.</p>
             </div>
         </a>
-    </div>
-    
-    <div class="col">
-        <div class="card h-100 bg-dark border-secondary text-light opacity-50 shadow-sm" style="border-style: dashed !important;">
-            <div class="card-body text-center py-4">
-                <div class="display-4 mb-3"><i class="bi bi-robot text-secondary opacity-75"></i></div>
-                <h5 class="card-title text-secondary fw-bold">AI Predictor</h5>
-                <p class="card-text text-secondary small">Machine Learning race predictions.</p>
-                <span class="badge bg-secondary mt-2">Under Construction</span>
-            </div>
-        </div>
     </div>
     <div class="col">
         <div class="card h-100 bg-dark border-secondary text-light opacity-50 shadow-sm" style="border-style: dashed !important;">
@@ -129,5 +154,42 @@
 <style>
     .transition-hover { transition: transform 0.2s ease, border-color 0.2s ease; }
     .transition-hover:hover { transform: translateY(-5px); border-color: var(--theme-primary) !important; }
+    .tracking-wider { letter-spacing: 0.1em; }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+{% if next_race %}
+<script>
+    // JS Logic for Live Countdown Timer
+    const raceDate = new Date("{{ next_race.timestamp }}").getTime();
+    
+    const updateCountdown = () => {
+        const now = new Date().getTime();
+        const distance = raceDate - now;
+        
+        if (distance < 0) {
+            document.getElementById("countdown-timer").innerHTML = "<h3 class='text-success fw-bold'><i class='bi bi-flag-fill me-2'></i>RACE SESSION HAS STARTED</h3>";
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById("cd-days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("cd-hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("cd-mins").innerText = minutes.toString().padStart(2, '0');
+        
+        const secsElement = document.getElementById("cd-secs");
+        if(secsElement) {
+            secsElement.innerText = seconds.toString().padStart(2, '0');
+        }
+    };
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+{% endif %}
 {% endblock %}

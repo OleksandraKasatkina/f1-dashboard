@@ -15,6 +15,12 @@ from . import services
 # ── Main Pages ────────────────────────────────────────────────────────────────
 class HomeView(TemplateView):
     template_name = 'dashboard/home.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Inject the next race data into the home page for the countdown
+        context['next_race'] = services.get_next_race()
+        return context
 
 
 class ScheduleView(TemplateView):
@@ -262,15 +268,13 @@ class CustomLogoutView(LogoutView):
 # ── Profile & Customization Views ─────────────────────────────────────────────
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/profile.html'
-    login_url = 'login' # Redirects to login page if user is anonymous
+    login_url = 'login' 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Safely fetch or initialize a profile record for the active user
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
         form = UserProfileForm(instance=profile)
         
-        # Pass favorite driver/team objects if they exist to display custom elements
         context.update({
             'form': form,
             'favorite_driver_data': data.DRIVER_MAP.get(profile.favorite_driver),
