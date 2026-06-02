@@ -16,6 +16,21 @@ class CustomRegisterForm(UserCreationForm):
                 'class': 'form-control bg-dark text-light border-secondary'
             })
 
+class UserSettingsForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=False, max_length=150)
+    last_name = forms.CharField(required=False, max_length=150)
+    
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'form-control bg-dark text-light border-secondary'
+            })
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

@@ -134,13 +134,24 @@
             </ul>
             <div class="d-flex align-items-center gap-3">
                 {% if user.is_authenticated %}
-                    <span class="text-light small">
-                        Welcome, <a href="{% url 'profile' %}" class="fw-bold text-decoration-none transition-hover" style="color: var(--theme-primary);">{{ user.username }}</a>!
-                    </span>
-                    <form method="POST" action="{% url 'logout' %}" class="m-0">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-secondary btn-sm">Sign Out</button>
-                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle border-0 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle fs-5" style="color: var(--theme-primary);"></i> 
+                            <span class="text-light fw-bold">{{ user.username }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end mt-2">
+                            <li><h6 class="dropdown-header text-secondary text-uppercase tracking-wider small">My Account</h6></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'profile' %}"><i class="bi bi-palette-fill me-2 text-secondary"></i>Theme Studio</a></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'settings' %}"><i class="bi bi-gear-fill me-2 text-secondary"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider border-secondary"></li>
+                            <li>
+                                <form method="POST" action="{% url 'logout' %}" class="m-0 p-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item py-2 text-danger fw-bold"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Sign In</a>
                     <a href="{% url 'register' %}" class="btn f1-btn btn-sm">Register</a>

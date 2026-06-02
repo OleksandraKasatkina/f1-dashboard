@@ -1,14 +1,16 @@
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth import logout
+from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, View, CreateView
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 import random
 import base64
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View, CreateView
-from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import UserProfile
-from .forms import CustomRegisterForm, UserProfileForm
+from .forms import CustomRegisterForm, UserProfileForm, UserSettingsForm 
 from . import data
 from . import services
 
@@ -73,14 +75,19 @@ class ResultsView(TemplateView):
             year = int(self.request.GET.get('year', data.CURRENT_YEAR))
         except ValueError:
             year = data.CURRENT_YEAR
+            
+        round_num = self.request.GET.get('round')
+        race_results, quali_results, event_name, error = services.fetch_latest_results(year, round_num)
+        race_options = services.get_completed_races_list(year)
 
-        race_results, quali_results, event_name, error = services.fetch_latest_results(year)
         context.update({
             'race_results': race_results,
             'quali_results': quali_results,
             'event_name': event_name,
             'year': year,
             'available_years': data.AVAILABLE_YEARS,
+            'race_options': race_options,
+            'selected_round': round_num,
             'error_message': error,
         })
         return context
@@ -292,3 +299,36 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             return redirect('profile')
             
         return render(request, self.template_name, {'form': form})
+    
+class SettingsView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/settings.html'
+    login_url = 'login'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = UserSettingsForm(instance=self.request.user)
+        return context
+        
+    def post(self, request, *args, **kwargs):
+        form = UserSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Account settings updated successfully!")
+            return redirect('settings')
+        return render(request, self.template_name, {'form': form})
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'dashboard/password_change.html'
+    success_url = reverse_lazy('settings')
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Your password was successfully updated!")
+        return super().form_valid(form)
+
+class DeleteAccountView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, "Your account has been successfully deleted. We are sorry to see you go!")
+        return redirect('home')

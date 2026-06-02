@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
     <div>
         <h1><i class="bi bi-calendar-week text-danger me-2"></i>Formula 1 Schedule</h1>
-        <p class="text-secondary mb-0">Click a circuit name to see track details.</p>
+        <p class="text-secondary mb-0">Click a circuit or a past race to see details and results.</p>
     </div>
     <form method="GET" action="" class="d-flex align-items-center gap-2">
         <label for="year" class="form-label mb-0 text-secondary">Season:</label>
@@ -18,7 +18,7 @@
 </div>
 
 {% if error_message %}
-<div class="alert alert-danger" role="alert">{{ error_message }}</div>
+<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error_message }}</div>
 {% else %}
 <div class="table-responsive">
     <table class="table table-dark table-striped table-hover align-middle border-secondary">
@@ -35,10 +35,23 @@
         {% for event in events %}
             <tr>
                 <td>{{ event.round }}</td>
-                <td class="fw-bold">{{ event.event_name }}</td>
+                <td class="fw-bold">
+                    {% if event.is_past %}
+                        <a href="{% url 'results' %}?year={{ year }}&round={{ event.round }}" class="text-light text-decoration-none" style="transition: color 0.2s;" onmouseover="this.style.color='var(--theme-primary)'" onmouseout="this.style.color=''">
+                            {{ event.event_name }} <i class="bi bi-box-arrow-up-right ms-1 small opacity-50"></i>
+                        </a>
+                    {% else %}
+                        <span class="text-secondary">{{ event.event_name }}</span>
+                    {% endif %}
+                </td>
                 <td>{{ event.country }}</td>
                 <td><a href="{% url 'circuit_detail' event.location %}" class="text-decoration-none text-danger">{{ event.location }}</a></td>
-                <td>{{ event.date }}</td>
+                <td>
+                    {{ event.date }}
+                    {% if not event.is_past %}
+                        <span class="badge bg-secondary ms-2 opacity-50 fw-normal">Upcoming</span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

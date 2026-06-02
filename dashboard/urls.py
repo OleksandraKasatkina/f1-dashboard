@@ -3,7 +3,8 @@ from .views import (
     HomeView, ScheduleView, StandingsView, ResultsView, CompareView,
     DriversView, DriverDetailView, ConstructorsView, HistoryView,
     QuizView, QuizCheckView, CircuitDetailView,
-    RegisterView, CustomLoginView, CustomLogoutView, ProfileView # Added ProfileView
+    RegisterView, CustomLoginView, CustomLogoutView, ProfileView,
+    SettingsView, CustomPasswordChangeView, DeleteAccountView 
 )
 
 urlpatterns = [
@@ -20,9 +21,14 @@ urlpatterns = [
     path('quiz/check/', QuizCheckView.as_view(), name='quiz_check'),
     path('circuit/<str:location>/', CircuitDetailView.as_view(), name='circuit_detail'),
     
-    # Auth paths
+    # Auth & Profile paths
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('profile/', ProfileView.as_view(), name='profile'), # New path
+    path('profile/', ProfileView.as_view(), name='profile'),
+    
+    # Settings paths
+    path('settings/', SettingsView.as_view(), name='settings'),
+    path('settings/password/', CustomPasswordChangeView.as_view(), name='password_change'),
+    path('settings/delete/', DeleteAccountView.as_view(), name='delete_account'),
 ]

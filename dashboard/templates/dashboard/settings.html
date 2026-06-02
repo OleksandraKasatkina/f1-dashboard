@@ -1,0 +1,104 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold mb-1">
+            <i class="bi bi-gear-fill text-danger me-2"></i>Settings
+        </h1>
+        <p class="text-secondary">Manage your account information, security, and data.</p>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success border-success bg-transparent text-success mb-4 text-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card bg-dark border-secondary shadow-sm mb-4">
+            <div class="card-header border-secondary py-3">
+                <h5 class="mb-0 text-light fw-bold"><i class="bi bi-person-lines-fill text-danger me-2"></i>Account Information</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small fw-bold text-uppercase">First Name <span class="fw-normal text-muted text-lowercase">(optional)</span></label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small fw-bold text-uppercase">Last Name <span class="fw-normal text-muted text-lowercase">(optional)</span></label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-secondary small fw-bold text-uppercase">Email Address</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn f1-btn px-4"><i class="bi bi-save me-2"></i>Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card bg-dark border-secondary shadow-sm">
+            <div class="card-header border-secondary py-3">
+                <h5 class="mb-0 text-light fw-bold"><i class="bi bi-shield-lock-fill text-danger me-2"></i>Security</h5>
+            </div>
+            <div class="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h6 class="text-light mb-1">Account Password</h6>
+                    <p class="text-secondary small mb-0">Change your password to keep your account secure.</p>
+                </div>
+                <a href="{% url 'password_change' %}" class="btn btn-outline-light"><i class="bi bi-key me-2"></i>Change Password</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card bg-dark shadow-sm border border-danger border-2">
+            <div class="card-header border-danger py-3">
+                <h5 class="mb-0 text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Danger Zone</h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-secondary small">
+                    Once you delete your account, there is no going back. Please be certain. All your settings, F1 allegiance, and future Fantasy League data will be permanently wiped.
+                </p>
+                <button type="button" class="btn btn-danger w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                    <i class="bi bi-trash3-fill me-2"></i>Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true" data-bs-theme="dark">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary shadow-lg">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-light fw-bold" id="deleteAccountModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-secondary">
+                Are you absolutely sure you want to delete your account? This action <strong class="text-danger">cannot be undone</strong>.
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'delete_account' %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger fw-bold">Yes, delete my account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

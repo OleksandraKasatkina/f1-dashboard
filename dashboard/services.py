@@ -16,6 +16,7 @@ def get_schedule_events(year):
     try:
         schedule = fastf1.get_event_schedule(year)
         races = schedule[schedule['EventFormat'] != 'testing']
+        today = date.today()
         for _, row in races.iterrows():
             events.append({
                 'round': row['RoundNumber'],
@@ -23,6 +24,7 @@ def get_schedule_events(year):
                 'country': row['Country'],
                 'location': row['Location'],
                 'date': row['EventDate'].date(),
+                'is_past': row['EventDate'].date() <= today, # Check if race has happened
             })
     except Exception:
         error_message = f"Schedule for {year} could not be loaded."
@@ -68,24 +70,36 @@ def fetch_standings(year):
 
     return drivers, constructors, error
 
-def fetch_latest_results(year):
-    """Finds the most recent race and fetches its race and qualifying results."""
+def fetch_latest_results(year, round_num=None):
+    """Fetches race and qualifying results for a specific round or the latest completed race."""
     race_results, quali_results = [], []
     event_name, error_message = None, None
 
     try:
         schedule = fastf1.get_event_schedule(year)
         races = schedule[schedule['EventFormat'] != 'testing']
-        past = [r for _, r in races.iterrows() if r['EventDate'].date() <= date.today()]
         
-        if not past:
-            return [], [], None, "No completed races yet this season."
+        if round_num:
+            # User requested a specific round
+            try:
+                latest = races[races['RoundNumber'] == int(round_num)].iloc[0]
+            except IndexError:
+                return [], [], None, f"Round {round_num} not found in {year} schedule."
             
-        latest = past[-1]
+            # Prevent fetching future races
+            if latest['EventDate'].date() > date.today():
+                return [], [], latest['EventName'], "This race has not happened yet."
+        else:
+            # Default fallback: get the most recent past race
+            past = [r for _, r in races.iterrows() if r['EventDate'].date() <= date.today()]
+            if not past:
+                return [], [], None, "No completed races yet this season."
+            latest = past[-1]
+            
         event_name = latest['EventName']
-        round_num = int(latest['RoundNumber'])
+        actual_round = int(latest['RoundNumber'])
 
-        race_session = fastf1.get_session(year, round_num, 'R')
+        race_session = fastf1.get_session(year, actual_round, 'R')
         race_session.load(laps=False, telemetry=False, weather=False, messages=False)
         for _, row in race_session.results.iterrows():
             race_results.append({
@@ -97,7 +111,7 @@ def fetch_latest_results(year):
             })
 
         try:
-            q = fastf1.get_session(year, round_num, 'Q')
+            q = fastf1.get_session(year, actual_round, 'Q')
             q.load(laps=False, telemetry=False, weather=False, messages=False)
             for _, row in q.results.iterrows():
                 quali_results.append({
@@ -163,13 +177,12 @@ def get_next_race():
         races = schedule[schedule['EventFormat'] != 'testing']
         
         for _, row in races.iterrows():
-            # Check if the race date is today or in the future
             if row['EventDate'].date() >= date.today():
                 return {
                     'name': row['EventName'],
                     'round': row['RoundNumber'],
                     'location': row['Location'],
-                    'timestamp': row['EventDate'].isoformat() # Convert for JS parsing
+                    'timestamp': row['EventDate'].isoformat()
                 }
     except Exception:
         pass
