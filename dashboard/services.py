@@ -4,7 +4,6 @@ import fastf1
 import requests
 from datetime import date
 
-# Configure FastF1 cache
 if not os.path.exists('cache'):
     os.makedirs('cache')
 fastf1.Cache.enable_cache('cache')
@@ -24,7 +23,7 @@ def get_schedule_events(year):
                 'country': row['Country'],
                 'location': row['Location'],
                 'date': row['EventDate'].date(),
-                'is_past': row['EventDate'].date() <= today, # Check if race has happened
+                'is_past': row['EventDate'].date() <= today,
             })
     except Exception:
         error_message = f"Schedule for {year} could not be loaded."
@@ -80,17 +79,14 @@ def fetch_latest_results(year, round_num=None):
         races = schedule[schedule['EventFormat'] != 'testing']
         
         if round_num:
-            # User requested a specific round
             try:
                 latest = races[races['RoundNumber'] == int(round_num)].iloc[0]
             except IndexError:
                 return [], [], None, f"Round {round_num} not found in {year} schedule."
             
-            # Prevent fetching future races
             if latest['EventDate'].date() > date.today():
                 return [], [], latest['EventName'], "This race has not happened yet."
         else:
-            # Default fallback: get the most recent past race
             past = [r for _, r in races.iterrows() if r['EventDate'].date() <= date.today()]
             if not past:
                 return [], [], None, "No completed races yet this season."

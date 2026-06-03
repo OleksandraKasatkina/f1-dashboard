@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     
     # Feature Toggles
     show_watermark = models.BooleanField(default=True)
-    use_team_theme = models.BooleanField(default=False) # Legacy field
+    use_team_theme = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.username}'s F1 Profile"

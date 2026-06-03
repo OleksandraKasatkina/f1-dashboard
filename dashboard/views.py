@@ -14,13 +14,12 @@ from .forms import CustomRegisterForm, UserProfileForm, UserSettingsForm
 from . import data
 from . import services
 
-# ── Main Pages ────────────────────────────────────────────────────────────────
+# Main Pages 
 class HomeView(TemplateView):
     template_name = 'dashboard/home.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Inject the next race data into the home page for the countdown
         context['next_race'] = services.get_next_race()
         return context
 
@@ -249,7 +248,7 @@ class QuizCheckView(View):
     def get(self, request, *args, **kwargs):
         return redirect('quiz')
 
-# ── Authentication Views ──────────────────────────────────────────────────────
+# Authentication Views 
 class RegisterView(CreateView):
     template_name = 'dashboard/register.html'
     form_class = CustomRegisterForm
@@ -272,7 +271,7 @@ class CustomLogoutView(LogoutView):
     next_page = 'home'
 
 
-# ── Profile & Customization Views ─────────────────────────────────────────────
+# Profile & Customization Views 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/profile.html'
     login_url = 'login' 

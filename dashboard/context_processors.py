@@ -19,7 +19,6 @@ def f1_theme_processor(request):
             profile = request.user.profile
             mode = profile.theme_mode
             
-            # Extract driver specific data
             if profile.favorite_driver:
                 driver_data = data.DRIVER_MAP.get(profile.favorite_driver)
                 if driver_data:
@@ -27,7 +26,6 @@ def f1_theme_processor(request):
                     if profile.show_watermark:
                         theme['watermark'] = str(driver_data['number'])
 
-            # Apply Theme Mode Logic
             if mode == 'team' and profile.favorite_team:
                 team_data = next((t for t in data.CONSTRUCTORS_2026 if t['name'] == profile.favorite_team), None)
                 if team_data:
@@ -48,7 +46,6 @@ def f1_theme_processor(request):
                 theme['secondary'] = profile.custom_secondary
                 theme['text'] = profile.custom_text
             
-            # Generate the subtle glowing background
             if theme['primary'].startswith('#') and len(theme['primary']) == 7:
                 tint = theme['primary'] + "15" 
             else:
