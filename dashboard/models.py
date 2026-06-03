@@ -13,13 +13,11 @@ class UserProfile(models.Model):
     favorite_team = models.CharField(max_length=100, blank=True, default='')
     favorite_driver = models.CharField(max_length=10, blank=True, default='')
     
-    # Advanced Theme Engine Fields
     theme_mode = models.CharField(max_length=20, choices=THEME_CHOICES, default='classic')
     custom_primary = models.CharField(max_length=7, default='#e10600')
     custom_secondary = models.CharField(max_length=7, default='#c40500')
     custom_text = models.CharField(max_length=7, default='#ffffff')
     
-    # Feature Toggles
     show_watermark = models.BooleanField(default=True)
     use_team_theme = models.BooleanField(default=False)
 
