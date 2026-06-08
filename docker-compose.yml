@@ -7,5 +7,3 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    # 'volumes' directive maps local project folder to /app in the container
-    # hot-reloading

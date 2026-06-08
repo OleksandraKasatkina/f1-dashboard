@@ -20,14 +20,10 @@ urlpatterns = [
     path('quiz/', QuizView.as_view(), name='quiz'),
     path('quiz/check/', QuizCheckView.as_view(), name='quiz_check'),
     path('circuit/<str:location>/', CircuitDetailView.as_view(), name='circuit_detail'),
-    
-    # Auth & Profile paths
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    
-    # Settings paths
     path('settings/', SettingsView.as_view(), name='settings'),
     path('settings/password/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('settings/delete/', DeleteAccountView.as_view(), name='delete_account'),
