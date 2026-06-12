@@ -1,7 +1,7 @@
 # F1 Dashboard 🏎️ 🏁
 
 > **⚠️ Disclaimer & Project Status**
-> This is an **unofficial, educational student project** built strictly for learning purposes. It is currently a **work in progress** (under development). It is not affiliated with, endorsed by, or associated with the Formula 1 companies or any official racing teams.
+> This is an **unofficial, educational** student project built strictly for learning purposes. It is currently a **work in progress** (under development). It is **not affiliated with, endorsed by, or associated with the Formula 1 companies** or any official racing teams. All driver images, team logos, and F1-related trademarks remain the **property of their respective owners** and are used **solely for non-commercial demonstration**.
 
 A dynamic, fully Dockerized web application built with Django that integrates Formula 1 schedules, live-like data processing, and highly personalized user-specific visual experiences.
 
